@@ -1,0 +1,148 @@
+/* ====== Fade In Up Animation ====== */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.fade-up-delay-1 {
+  animation-delay: 0.3s;
+}
+
+.fade-up-delay-2 {
+  animation-delay: 0.6s;
+}
+
+.fade-up-delay-3 {
+  animation-delay: 0.9s;
+}
+
+.fade-up-delay-4 {
+  animation-delay: 1.2s;
+}
+
+.btn-orange-transition {
+  background-color: #fff;
+  color: #ff5c00;
+  border: 2px solid #ff5c00;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-orange-transition:hover {
+  background-color: #ff5c00;
+  color: #fff;
+}
+/* === Custom Button Styles === */
+.btn-orange-transition {
+  background-color: #fff;
+  color: #ff5c00;
+  border: 2px solid #ff5c00;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-orange-transition:hover {
+  background-color: #ff5c00;
+  color: #fff;
+}
+
+/* Get Started Button */
+.btn-orange-filled {
+  background-color: #ff5c00;
+  color: #fff;
+  border: 2px solid transparent;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-orange-filled:hover {
+  background-color: #fff;
+  color: #ff5c00;
+  border-color: #ff5c00;
+}
+/* === Fade-in Up Animation === */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s ease-in-out forwards;
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  background-color: #fff6ef; /* Soft orange background */
+}
+.btn-orange-filled {
+  background-color: #ff5c00;
+  color: #fff;
+  border: 2px solid transparent;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-orange-filled:hover {
+  background-color: #fff;
+  color: #ff5c00;
+  border-color: #ff5c00;
+}
+/* pricing-button class */
+.pricing-button {
+  border: 2px solid #fd7e14;
+  color: #fd7e14;
+  background-color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.pricing-button:hover {
+  background-color: #fd7e14;
+  color: white;
+}
+
+/* for solid button */
+.pricing-button-solid {
+  background-color: #fd7e14;
+  color: white;
+  border: 2px solid #fd7e14;
+  transition: 0.3s ease-in-out;
+}
+
+.pricing-button-solid:hover {
+  background-color: white;
+  color: #fd7e14;
+}
+.footer-icon {
+  font-size: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+.footer-icon:hover {
+  color: #fd7e14;
+}
+

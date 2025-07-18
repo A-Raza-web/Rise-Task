@@ -1,0 +1,75 @@
+/* --- Nav Links --- */
+.nav-link {
+  color: #222 !important;             /* T color (dark black-ish) */
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ff5c00 !important;          /* R color (orange) */
+}
+
+/* --- Login Button --- */
+.custom-login-btn {
+  color: #222;
+  border: 2px solid #222;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.custom-login-btn:hover {
+  background-color: #ff5c00;
+  color: white;
+  border-color: #ff5c00;
+}
+
+/* --- SignUp Button --- */
+.custom-signup-btn {
+  color: white;
+  background-color: #ff5c00;          /* R color */
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.custom-signup-btn:hover {
+  background-color: #222;             /* T color on hover */
+  color: white;
+}
+/* Nav Links */
+.nav-link {
+  color: #222 !important;             /* T color (dark black) */
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ff5c00 !important;          /* R color (orange) */
+}
+
+/* Login Button */
+.custom-login-btn {
+  color: #222;
+  border: 2px solid #222;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.custom-login-btn:hover {
+  background-color: #ff5c00;
+  color: white;
+  border-color: #ff5c00;
+}
+
+/* ✅ Updated SignUp Button */
+.custom-signup-btn {
+  color: #222;                            /* T color */
+  background-color: transparent;
+  border: 2px solid #222;
+  transition: all 0.3s ease;
+}
+
+.custom-signup-btn:hover {
+  background-color: #ff5c00;             /* R color */
+  color: white;
+  border-color: #ff5c00;
+}
