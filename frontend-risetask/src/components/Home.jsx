@@ -47,25 +47,28 @@ const Home = () => {
           {/* Stats Section */}
           <div className="row mt-4">
             <div className="col-md-4 fade-up fade-up-delay-2">
-              <h3 style={{ color: "#ff5c00" }}>
-                <FaBullseye className="me-2" /> 10K+
+              <h3 className="text-white">
+                <FaBullseye className="me-2" style={{ color: "#ff5c00" }} /> 10K+
               </h3>
               <p className="text-white">Tasks Completed</p>
             </div>
             <div className="col-md-4 fade-up fade-up-delay-3">
-              <h3 style={{ color: "#ff5c00" }}>
-                <FaBolt className="me-2" /> 95%
+              <h3 className="text-white">
+                <FaBolt className="me-2" style={{ color: "#ff5c00" }} /> 95%
               </h3>
               <p className="text-white">Productivity Boost</p>
             </div>
             <div className="col-md-4 fade-up fade-up-delay-4">
-              <h3 style={{ color: "#ff5c00" }}>
-                <FaUsers className="me-2" /> 5K+
+              <h3 className="text-white">
+                <FaUsers className="me-2" style={{ color: "#ff5c00" }} /> 5K+
               </h3>
               <p className="text-white">Happy Users</p>
             </div>
           </div>
+
           <div className="mt-4 d-flex justify-content-center gap-3">
+    {/* Outlined Orange Button */}
+       <div className="mt-4 d-flex justify-content-center gap-3">
               <a
                 href="#features"
                 className="btn btn-lg btn-orange-transition fade-up fade-up-delay-3"
@@ -78,8 +81,9 @@ const Home = () => {
               >
                 Get Started Free
               </button>
-            </div>
+            </div> 
          </div>
+        </div>
       </section>
     </div>
 

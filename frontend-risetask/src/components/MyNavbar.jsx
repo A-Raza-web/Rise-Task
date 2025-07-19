@@ -57,15 +57,16 @@ const MyNavbar = () => {
               <FaEnvelope className="me-1" style={{ color: "#fd7e14" }} /> Contact
             </Nav.Link>
           </Nav>
-
           <Nav>
-            <Nav.Link as={Link} to="/login" style={{ color: "#fd7e14" }}>
-              <FaSignInAlt className="me-1" /> Login
+            <Nav.Link as={Link} to="/login">
+              <FaSignInAlt className="me-1" style={{ color: "#fd7e14" }} /> Login
             </Nav.Link>
-            <Nav.Link as={Link} to="/signup" style={{ color: "#fd7e14" }}>
-              <FaUserPlus className="me-1" /> Sign Up
+            <Nav.Link as={Link} to="/signup">
+              <FaUserPlus className="me-1" style={{ color: "#fd7e14" }} /> Sign Up
             </Nav.Link>
           </Nav>
+
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

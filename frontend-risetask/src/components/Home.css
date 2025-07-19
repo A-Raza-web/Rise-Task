@@ -67,8 +67,8 @@
 }
 
 .btn-orange-filled:hover {
-  background-color: #fff;
-  color: #ff5c00;
+  background-color:  #ff5c00;
+  color: #fff;
   border-color: #ff5c00;
 }
 /* === Fade-in Up Animation === */
