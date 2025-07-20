@@ -10,7 +10,28 @@ import { FaFacebook, FaTwitter, FaInstagram, FaEnvelope } from "react-icons/fa";
 import "./Home.css"
 
 
+
 const Home = () => {
+   const [stats, setStats] = useState({
+    tasksCompleted: 0,
+    productivityBoost: 0,
+    happyUsers: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('https://localhost:3000/api/stats');
+        setStats(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchStats();
+    const interval = setInterval(fetchStats, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       {/* Hero Section */}
@@ -45,28 +66,27 @@ const Home = () => {
           </p>
 
           {/* Stats Section */}
-          <div className="row mt-4">
-            <div className="col-md-4 fade-up fade-up-delay-2">
-              <h3 className="text-white">
-                <FaBullseye className="me-2" style={{ color: "#ff5c00" }} /> 10K+
-              </h3>
-              <p className="text-white">Tasks Completed</p>
-            </div>
-            <div className="col-md-4 fade-up fade-up-delay-3">
-              <h3 className="text-white">
-                <FaBolt className="me-2" style={{ color: "#ff5c00" }} /> 95%
-              </h3>
-              <p className="text-white">Productivity Boost</p>
-            </div>
-            <div className="col-md-4 fade-up fade-up-delay-4">
-              <h3 className="text-white">
-                <FaUsers className="me-2" style={{ color: "#ff5c00" }} /> 5K+
-              </h3>
-              <p className="text-white">Happy Users</p>
-            </div>
+        <div className="row mt-4">
+          <div className="col-md-4 fade-up fade-up-delay-2">
+            <h3 className="text-white">
+              <FaBullseye className="me-2" style={{ color: '#ff5c00' }} /> {stats.tasksCompleted}+
+            </h3>
+            <p className="text-white">Tasks Completed</p>
           </div>
-
-          <div className="mt-4 d-flex justify-content-center gap-3">
+          <div className="col-md-4 fade-up fade-up-delay-3">
+            <h3 className="text-white">
+              <FaBolt className="me-2" style={{ color: '#ff5c00' }} /> {stats.productivityBoost}%
+            </h3>
+            <p className="text-white">Productivity Boost</p>
+          </div>
+          <div className="col-md-4 fade-up fade-up-delay-4">
+            <h3 className="text-white">
+              <FaUsers className="me-2" style={{ color: '#ff5c00' }} /> {stats.happyUsers}+
+            </h3>
+            <p className="text-white">Happy Users</p>
+          </div>
+        </div>
+      <div className="mt-4 d-flex justify-content-center gap-3">
     {/* Outlined Orange Button */}
        <div className="mt-4 d-flex justify-content-center gap-3">
               <a
@@ -393,9 +413,9 @@ const Home = () => {
             </div>
           </div>
         </footer>
-
     </div>
   );
-};
+}
+
 
 export default Home;
