@@ -1,4 +1,7 @@
-import React from "react";
+
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import heroBg from "../assets/img.webp"; 
 import aboutImg from "../assets/about.jpg";
@@ -32,11 +35,14 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const navigate = useNavigate();
+
+
   return (
     <div>
       {/* Hero Section */}
     <div>
-      {/* ✅ Hero Section with Background Image */}
+      {/* Hero Section with Background Image */}
           <section
         className="text-center py-5"
         style={{
@@ -116,19 +122,24 @@ const Home = () => {
             <div className="row">
 
               {/* Feature 1 */}
-              <div className="col-md-3 mb-4">
-                <div className="card h-100 text-center border-0 card-hover">
-                  <div className="card-body p-4">
-                    <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
-                      <FaRegEdit />
-                    </div>
-                    <h5 className="card-title" style={{ color: '#ff5c00' }}>Create Tasks</h5>
-                    <p className="card-text text-muted">
-                      Easily create and organize your daily tasks with intuitive interface.
-                    </p>
-                  </div>
-                </div>
-              </div>
+           <div
+              className="col-md-3 mb-4"
+              onClick={() => navigate('/create-task')}
+              style={{ cursor: 'pointer' }}
+            >
+             <div className="card h-100 text-center border-0 card-hover">
+               <div className="card-body p-4">
+                 <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
+                  <FaRegEdit />
+                 </div>
+                 <h5 className="card-title" style={{ color: '#ff5c00' }}>Create Tasks</h5>
+                 <p className="card-text text-muted">
+                   Easily create and organize your daily tasks with intuitive interface.
+                 </p>
+               </div>
+             </div>
+           </div>
+
 
               {/* Feature 2 */}
               <div className="col-md-3 mb-4">

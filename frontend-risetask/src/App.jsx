@@ -26,6 +26,7 @@ function App() {
       <MyNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/create-task" element={<TaskForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tasks" element={
           <>

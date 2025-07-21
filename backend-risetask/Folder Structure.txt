@@ -6,7 +6,7 @@ backend-risetask/
 │   │
 │   ├── controllers/
 │   │   ├── auth.controller.ts    # Login, Signup logic
-│   │   └── task.controller.ts    # CRUD logic for tasks
+│   │   └── taskController.ts     # CRUD logic for tasks
 │   │
 │   ├── middlewares/
 │   │   ├── auth.middleware.ts    # JWT verify middleware
@@ -14,7 +14,7 @@ backend-risetask/
 │   │
 │   ├── models/
 │   │   ├── user.model.ts         # User Schema
-│   │   └── task.model.ts         # Task Schema
+│   │   └── taskModel.ts          # Task Schema
 │   │
 │   ├── routes/
 │   │   ├── auth.routes.ts        # /api/auth routes
