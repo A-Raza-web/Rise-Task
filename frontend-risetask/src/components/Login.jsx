@@ -9,7 +9,7 @@ const Login = () => {
           className="card-header text-white"
           style={{ backgroundColor: "#fd7e14" }}
         >
-          <h3><FaSignInAlt className="me-2" /> Login</h3>
+          <h3><FaSignInAlt className="me-2" />Sign In</h3>
         </div>
         <div className="card-body">
           <form>
@@ -26,7 +26,7 @@ const Login = () => {
               className="btn text-white"
               style={{ backgroundColor: "#fd7e14" }}
             >
-              Login
+              Sign In
             </button>
           </form>
         </div>

@@ -59,7 +59,7 @@ const MyNavbar = () => {
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/login">
-              <FaSignInAlt className="me-1" style={{ color: "#fd7e14" }} /> Login
+              <FaSignInAlt className="me-1" style={{ color: "#fd7e14" }} /> Sign In
             </Nav.Link>
             <Nav.Link as={Link} to="/signup">
               <FaUserPlus className="me-1" style={{ color: "#fd7e14" }} /> Sign Up

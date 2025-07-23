@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import Home from "./components/Home";
+import SchedulerPage from './pages/SchedulerPage'; 
 import Dashboard from "./components/Dashboard";
 import Settings from "./components/Settings";
 import About from "./components/About";
@@ -27,6 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-task" element={<TaskForm />} />
+        <Route path="/scheduler" element={<SchedulerPage />} /> 
+
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tasks" element={
           <>

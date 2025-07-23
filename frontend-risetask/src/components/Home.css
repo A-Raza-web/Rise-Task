@@ -146,3 +146,16 @@
   color: #fd7e14;
 }
 
+.btn-orange-filled {
+  background-color: #ff5c00;
+  color: white;
+  border: none;
+}
+.btn-orange-filled:hover {
+  background-color: #e55300;
+}
+.card-hover:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+  transition: 0.3s ease-in-out;
+}

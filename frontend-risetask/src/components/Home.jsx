@@ -36,6 +36,8 @@ const Home = () => {
   }, []);
 
   const navigate = useNavigate();
+  const [showSchedulerForm, setShowSchedulerForm] = useState(false);
+
 
 
   return (
@@ -142,7 +144,12 @@ const Home = () => {
 
 
               {/* Feature 2 */}
-              <div className="col-md-3 mb-4">
+
+              <div
+                className="col-md-3 mb-4"
+                onClick={() => navigate('/scheduler')}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="card h-100 text-center border-0 card-hover">
                   <div className="card-body p-4">
                     <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
@@ -185,7 +192,6 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </section>
