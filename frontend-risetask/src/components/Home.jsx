@@ -36,7 +36,6 @@ const Home = () => {
   }, []);
 
   const navigate = useNavigate();
-  const [showSchedulerForm, setShowSchedulerForm] = useState(false);
 
 
 
