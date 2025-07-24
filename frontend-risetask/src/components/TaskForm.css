@@ -1,6 +1,6 @@
-
+/* Existing styles provided */
 .fade-in {
-  animation: fadeIn 0.8s ease-out;
+  animation: fadeIn 0.8s ease-out forwards; /* Added 'forwards' to keep the final state */
 }
 
 @keyframes fadeIn {
@@ -13,6 +13,42 @@
     transform: translateY(0);
   }
 }
+
+/* NEW: Slide In Animation from Left */
+.slide-in-left {
+  animation: slideInLeft 0.7s ease-out forwards;
+  opacity: 0; /* Start invisible */
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* NEW: Slide In Animation from Right */
+.slide-in-right {
+  animation: slideInRight 0.7s ease-out forwards;
+  opacity: 0; /* Start invisible */
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
 /* Orange Button */
 .btn-orange {
   background-color: #fd7e14;
@@ -23,12 +59,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform for subtle hover */
   font-weight: 500;
 }
 
 .btn-orange:hover {
   background-color: #e96c0a;
+  transform: translateY(-2px); /* Lift button on hover */
 }
 
 /* Orange Outline Button */
@@ -48,6 +85,7 @@
 .btn-orange-outline:hover {
   background-color: #fd7e14;
   color: #fff;
+  transform: translateY(-2px); /* Lift button on hover */
 }
 .bg-orange {
   background-color: #fd7e14 !important;
@@ -55,4 +93,88 @@
 
 .z-3 {
   z-index: 999;
+}
+
+
+/* New and Modified Styles for Task Form */
+.task-form {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.task-form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.task-form-group label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.task-form-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #fd7e14; /* Orange */
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-form-group .form-control,
+.task-form-group .form-select {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 10px 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.task-form-group .form-control:focus,
+.task-form-group .form-select:focus {
+  border-color: #fd7e14;
+  box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.25);
+  outline: none;
+}
+
+.badge {
+  font-size: 0.85rem !important;
+  padding: 0.4em 0.8em !important;
+  border-radius: 20px !important;
+}
+
+/* Success Message Styling */
+.alert-success.task-success-alert {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  animation: fadeInOut 3s forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
 }
