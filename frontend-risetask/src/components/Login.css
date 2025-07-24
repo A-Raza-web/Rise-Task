@@ -1,0 +1,29 @@
+.login-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.login-title {
+  font-weight: 700;
+  color: #fd7e14;
+  font-size: 1.8rem;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 16px;
+}
+
+.login-btn {
+  background-color: #fd7e14;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.login-btn:hover {
+  background-color: #e96f0d;
+}

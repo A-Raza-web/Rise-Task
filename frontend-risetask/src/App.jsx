@@ -1,12 +1,12 @@
-// src/App.jsx
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AOS from 'aos';
 
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import Home from "./components/Home";
-import SchedulerPage from './pages/SchedulerPage'; 
+import SchedulerPage from './components/pages/SchedulerPage';
+import AITaskForm from "./components/pages/AITaskForm";
 import Dashboard from "./components/Dashboard";
 import Settings from "./components/Settings";
 import About from "./components/About";
@@ -19,8 +19,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    document.body.classList.toggle("dark-mode", darkMode);
-  }, [darkMode]);
+    AOS.init({ duration: 800 });
+  }, []);
 
   return (
     <Router>
@@ -28,8 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-task" element={<TaskForm />} />
-        <Route path="/scheduler" element={<SchedulerPage />} /> 
-
+        <Route path="/scheduler" element={<SchedulerPage />} />
+        <Route path="/ai-scheduler" element={<AITaskForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tasks" element={
           <>

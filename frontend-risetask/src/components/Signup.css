@@ -1,0 +1,29 @@
+.signup-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.signup-title {
+  font-weight: 700;
+  color: #fd7e14;
+  font-size: 1.8rem;
+}
+
+.signup-card {
+  background: #ffffff;
+  border-radius: 16px;
+}
+
+.signup-btn {
+  background-color: #fd7e14;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.signup-btn:hover {
+  background-color: #e96f0d;
+}
