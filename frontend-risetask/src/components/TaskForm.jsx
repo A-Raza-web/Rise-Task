@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./TaskForm.css" // Make sure your CSS file is correctly imported.
+import "./TaskForm.css";
 import {
   FaPlusCircle,
   FaTrashAlt,
@@ -15,11 +15,15 @@ const TaskForm = ({ onTaskAdded }) => {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
   const [dueDate, setDueDate] = useState("");
+  const [category, setCategory] = useState("General");
+  const [tags, setTags] = useState("");
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [reminderTime, setReminderTime] = useState(24);
+  const [categories, setCategories] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
-
-  const API_URL =
-    "https://2a361bfc-2f48-42b0-8ad6-5d8d8fec30e4-00-3sdsdmlcu7b3u.sisko.replit.dev/api/tasks";
+  
+  const API_URL = "http://localhost:3000/api/tasks";
 
   const validateForm = () => {
     const newErrors = {};
@@ -39,6 +43,22 @@ const TaskForm = ({ onTaskAdded }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Fetch categories on component mount
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/categories");
+      if (response.data.success) {
+        setCategories(response.data.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,26 +70,36 @@ const TaskForm = ({ onTaskAdded }) => {
         title: title.trim(),
         description: description.trim(),
         priority,
-        dueDate: dueDate || null,
-        completed: false,
-        createdAt: new Date().toISOString(),
+        dueDate: dueDate || undefined,
+        category,
+        tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+        notifications: {
+          enabled: notificationsEnabled,
+          reminderTime: reminderTime
+        }
       };
 
-      await axios.post(API_URL, taskData);
+      const response = await axios.post(API_URL, taskData);
+      
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Failed to create task');
+      }
 
-      // Reset Form
       setTitle("");
       setDescription("");
       setPriority("medium");
       setDueDate("");
+      setCategory("General");
+      setTags("");
+      setNotificationsEnabled(true);
+      setReminderTime(24);
       setErrors({});
 
-      // Success Message
       const successMessage = document.createElement("div");
       successMessage.className =
         "alert alert-success alert-dismissible fade show task-success-alert";
       successMessage.innerHTML = `
-        <strong> Success!</strong> Task "${taskData.title}" has been added successfully!
+        <strong>Success!</strong> Task "${taskData.title}" has been added successfully!
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       `;
       document.querySelector(".card-body")?.prepend(successMessage);
@@ -79,7 +109,7 @@ const TaskForm = ({ onTaskAdded }) => {
 
       if (onTaskAdded) onTaskAdded();
     } catch (err) {
-      console.error(" Add Error:", err.message);
+      console.error("Add Error:", err.message);
       setErrors({ submit: "Failed to add task. Please try again." });
     } finally {
       setIsSubmitting(false);
@@ -89,7 +119,7 @@ const TaskForm = ({ onTaskAdded }) => {
   const getPriorityColor = (priority) => {
     switch (priority) {
       case "low":
-        return "#10b981";
+        return "#064f37ff";
       case "medium":
         return "#f59e0b";
       case "high":
@@ -102,11 +132,11 @@ const TaskForm = ({ onTaskAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4 task-form">
-      {/* Task Title & Description Section with Slide-in animations */}
+    <form onSubmit={handleSubmit} className="mt-4 task-form mb-4">
+      {/* Task Title & Description Section */}
       <div className="row">
         {/* Task Title */}
-        <div className="col-md-6 task-form-group slide-in-left" style={{ animationDelay: '0.1s' }}> {/* Added slide-in-left and delay */}
+        <div className="col-md-6 task-form-group slide-in-left" style={{ animationDelay: '0.1s' }}>
           <label htmlFor="taskTitle" className="form-label">
             <span className="task-form-icon-circle">
               <FaTasks />
@@ -130,7 +160,7 @@ const TaskForm = ({ onTaskAdded }) => {
         </div>
 
         {/* Description */}
-        <div className="col-md-6 task-form-group slide-in-right" style={{ animationDelay: '0.2s' }}> {/* Added slide-in-right and delay */}
+        <div className="col-md-6 task-form-group slide-in-right" style={{ animationDelay: '0.2s' }}>
           <label htmlFor="taskDescription" className="form-label">
             <span className="task-form-icon-circle">
               <FaStickyNote />
@@ -156,28 +186,46 @@ const TaskForm = ({ onTaskAdded }) => {
         </div>
       </div>
 
-      {/* Priority & Due Date Section with Slide-in and staggered animation */}
-      <div className="row"> {/* Removed fade-in from this row to rely on individual column animations */}
+      {/* Priority & Due Date Section */}
+      <div className="row">
         {/* Priority Selector */}
-        <div className="col-md-6 task-form-group slide-in-left" style={{ animationDelay: '0.3s' }}> {/* Added slide-in-left and delay */}
+        <div className="col-md-6 task-form-group slide-in-left" style={{ animationDelay: '0.3s' }}>
           <label htmlFor="taskPriority" className="form-label">
             <span className="task-form-icon-circle">
               <FaExclamationCircle />
             </span>
             Priority
           </label>
-          <select
-            id="taskPriority"
-            className="form-select shadow-sm"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-            disabled={isSubmitting}
-          >
-            <option value="low">Low Priority</option>
-            <option value="medium">Medium Priority</option>
-            <option value="high">High Priority</option>
-            <option value="urgent">Urgent</option>
-          </select>
+          <div className="d-flex align-items-center flex-wrap gap-2">
+            <div
+              className={`custom-priority-option low ${priority === 'low' ? 'active' : ''}`}
+              onClick={() => setPriority('low')}
+              data-priority="low"
+            >
+              Low Priority
+            </div>
+            <div
+              className={`custom-priority-option medium ${priority === 'medium' ? 'active' : ''}`}
+              onClick={() => setPriority('medium')}
+              data-priority="medium"
+            >
+              Medium Priority
+            </div>
+            <div
+              className={`custom-priority-option high ${priority === 'high' ? 'active' : ''}`}
+              onClick={() => setPriority('high')}
+              data-priority="high"
+            >
+              High Priority
+            </div>
+            <div
+              className={`custom-priority-option urgent ${priority === 'urgent' ? 'active' : ''}`}
+              onClick={() => setPriority('urgent')}
+              data-priority="urgent"
+            >
+              Urgent
+            </div>
+          </div>
           <div className="form-text mt-2">
             <span
               className="badge rounded-pill px-3 py-1"
@@ -194,7 +242,7 @@ const TaskForm = ({ onTaskAdded }) => {
         </div>
 
         {/* Due Date Picker */}
-        <div className="col-md-6 task-form-group slide-in-right" style={{ animationDelay: '0.4s' }}> {/* Added slide-in-right and delay */}
+        <div className="col-md-6 task-form-group slide-in-right" style={{ animationDelay: '0.4s' }}>
           <label htmlFor="taskDueDate" className="form-label">
             <span className="task-form-icon-circle">
               <FaCalendarAlt />
@@ -216,8 +264,112 @@ const TaskForm = ({ onTaskAdded }) => {
         </div>
       </div>
 
-      {/* Action Buttons Section with Fade-in and delayed animation */}
-      <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4 fade-in" style={{ animationDelay: '0.5s' }}> {/* Added animationDelay */}
+      {/* Category & Tags Section */}
+      <div className="row">
+        {/* Category Selector */}
+        <div className="col-md-6 task-form-group slide-in-left" style={{ animationDelay: '0.5s' }}>
+          <label htmlFor="taskCategory" className="form-label">
+            <span className="task-form-icon-circle">
+              <FaTasks />
+            </span>
+            Category
+          </label>
+          <select
+            id="taskCategory"
+            className="form-control shadow-sm"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            disabled={isSubmitting}
+          >
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          <div className="form-text mt-2 text-muted">
+            Choose a category for better organization
+          </div>
+        </div>
+
+        {/* Tags Input */}
+        <div className="col-md-6 task-form-group slide-in-right" style={{ animationDelay: '0.6s' }}>
+          <label htmlFor="taskTags" className="form-label">
+            <span className="task-form-icon-circle">
+              <FaTasks />
+            </span>
+            Tags
+          </label>
+          <input
+            id="taskTags"
+            type="text"
+            className="form-control shadow-sm"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            placeholder="Enter tags separated by commas..."
+            disabled={isSubmitting}
+          />
+          <div className="form-text mt-2 text-muted">
+            Add tags for easy searching (e.g., urgent, work, personal)
+          </div>
+        </div>
+      </div>
+
+      {/* Notifications Section */}
+      <div className="row">
+        <div className="col-12 task-form-group slide-in-up" style={{ animationDelay: '0.7s' }}>
+          <label className="form-label">
+            <span className="task-form-icon-circle">
+              <FaCalendarAlt />
+            </span>
+            Notification Settings
+          </label>
+          <div className="card p-3 shadow-sm">
+            <div className="form-check mb-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="notificationsEnabled"
+                checked={notificationsEnabled}
+                onChange={(e) => setNotificationsEnabled(e.target.checked)}
+                disabled={isSubmitting}
+              />
+              <label className="form-check-label" htmlFor="notificationsEnabled">
+                Enable notifications for this task
+              </label>
+            </div>
+            
+            {notificationsEnabled && (
+              <div className="row">
+                <div className="col-md-6">
+                  <label htmlFor="reminderTime" className="form-label">
+                    Reminder Time (hours before due date)
+                  </label>
+                  <select
+                    id="reminderTime"
+                    className="form-control"
+                    value={reminderTime}
+                    onChange={(e) => setReminderTime(Number(e.target.value))}
+                    disabled={isSubmitting}
+                  >
+                    <option value={1}>1 hour</option>
+                    <option value={2}>2 hours</option>
+                    <option value={6}>6 hours</option>
+                    <option value={12}>12 hours</option>
+                    <option value={24}>24 hours (1 day)</option>
+                    <option value={48}>48 hours (2 days)</option>
+                    <option value={72}>72 hours (3 days)</option>
+                    <option value={168}>168 hours (1 week)</option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Action Buttons Section */}
+      <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4 fade-in" style={{ animationDelay: '0.5s' }}>
         <button
           type="submit"
           className="btn-orange"
@@ -244,6 +396,10 @@ const TaskForm = ({ onTaskAdded }) => {
               setDescription("");
               setPriority("medium");
               setDueDate("");
+              setCategory("General");
+              setTags("");
+              setNotificationsEnabled(true);
+              setReminderTime(24);
               setErrors({});
             }}
             disabled={isSubmitting}
@@ -253,7 +409,7 @@ const TaskForm = ({ onTaskAdded }) => {
         )}
       </div>
 
-      {/* Submission Error (can also have a fade-in if desired) */}
+      {/* Submission Error */}
       {errors.submit && (
         <div className="alert alert-danger mt-3 text-center fade-in" style={{ animationDelay: '0.6s' }} role="alert">
           {errors.submit}

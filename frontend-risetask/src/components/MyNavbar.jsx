@@ -1,5 +1,5 @@
 // src/components/MyNavbar.jsx
-import React from "react"; 
+import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
@@ -13,6 +13,7 @@ import {
   FaUserPlus
 } from "react-icons/fa";
 import riseLogo from "../assets/rise-icon.jpg"; // ✅ Replace with your RT logo image
+import NotificationCenter from "./NotificationCenter";
 import './MyNavbar.css';
 
 const MyNavbar = () => {
@@ -57,7 +58,10 @@ const MyNavbar = () => {
               <FaEnvelope className="me-1" style={{ color: "#fd7e14" }} /> Contact
             </Nav.Link>
           </Nav>
-          <Nav>
+          <Nav className="d-flex align-items-center">
+            <div className="me-3">
+              <NotificationCenter />
+            </div>
             <Nav.Link as={Link} to="/login">
               <FaSignInAlt className="me-1" style={{ color: "#fd7e14" }} /> Sign In
             </Nav.Link>
@@ -65,8 +69,6 @@ const MyNavbar = () => {
               <FaUserPlus className="me-1" style={{ color: "#fd7e14" }} /> Sign Up
             </Nav.Link>
           </Nav>
-
-
         </Navbar.Collapse>
       </Container>
     </Navbar>

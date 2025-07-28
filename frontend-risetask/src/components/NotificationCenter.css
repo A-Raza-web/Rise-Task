@@ -1,0 +1,116 @@
+.notification-center {
+  position: relative;
+  z-index: 1000;
+}
+
+.notification-dropdown {
+  z-index: 1050;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification-item {
+  transition: all 0.2s ease;
+}
+
+.notification-item:hover {
+  background-color: #f8f9fa !important;
+}
+
+.notification-item:last-child {
+  border-bottom: none !important;
+}
+
+.badge-urgent {
+  background-color: #dc3545;
+  color: white;
+}
+
+.badge-high {
+  background-color: #fd7e14;
+  color: white;
+}
+
+.badge-medium {
+  background-color: #ffc107;
+  color: black;
+}
+
+.badge-low {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Custom scrollbar for notification list */
+.card-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.card-body::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.card-body::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Notification bell animation */
+@keyframes bellShake {
+  0%, 50%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(-10deg); }
+  20%, 40% { transform: rotate(10deg); }
+}
+
+.notification-center .btn:hover .fa-bell {
+  animation: bellShake 0.5s ease-in-out;
+}
+
+/* Priority border colors */
+.border-danger {
+  border-left-color: #dc3545 !important;
+}
+
+.border-warning {
+  border-left-color: #ffc107 !important;
+}
+
+.border-info {
+  border-left-color: #17a2b8 !important;
+}
+
+.border-secondary {
+  border-left-color: #6c757d !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .notification-dropdown .card {
+    width: 300px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .notification-dropdown .card {
+    width: 280px !important;
+  }
+  
+  .notification-dropdown {
+    right: -50px;
+  }
+}

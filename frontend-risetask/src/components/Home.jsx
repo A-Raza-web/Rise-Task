@@ -162,45 +162,48 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Feature 3 */}
 
-
-{/* Feature 3 */}
-<div
-  className="col-md-3 mb-4"
-  onClick={() => navigate('/ai-scheduler')}
-  style={{ cursor: 'pointer' }}
-              >
-    <div className="card h-100 text-center border-0 card-hover shadow-sm">
-      <div className="card-body p-4">
-        <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
-          <FaRobot />
-        </div>
-        <h5 className="card-title" style={{ color: '#ff5c00' }}>AI Assistant</h5>
-        <p className="card-text text-muted">
-          Let AI suggest and optimize your workflow for maximum productivity.
-        </p>
-      </div>
-    </div>
-</div>
-
-              {/* Feature 4 */}
-              <div className="col-md-3 mb-4">
-                <div className="card h-100 text-center border-0 card-hover">
-                  <div className="card-body p-4">
-                    <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
-                      <FaUsers />
+                {/* Feature 3 */}
+                <div
+                  className="col-md-3 mb-4"
+                  onClick={() => navigate('/ai-scheduler')}
+                  style={{ cursor: 'pointer' }}
+                              >
+                    <div className="card h-100 text-center border-0 card-hover">
+                      <div className="card-body p-4">
+                        <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
+                          <FaRobot />
+                        </div>
+                        <h5 className="card-title" style={{ color: '#ff5c00' }}>AI Assistant</h5>
+                        <p className="card-text text-muted">
+                          Let AI suggest and optimize your workflow for maximum productivity.
+                        </p>
+                      </div>
                     </div>
-                    <h5 className="card-title" style={{ color: '#ff5c00' }}>Team Tasks</h5>
-                    <p className="card-text text-muted">
-                      Collaborate with your team in real time with shared workspaces.
-                    </p>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
+             
+             
+              {/* Feature 4 */}
+                 <div
+                  className="col-md-3 mb-4"
+                  onClick={() => navigate('/team-tasks')}
+                  style={{ cursor: 'pointer' }}
+                >
+                   <div className="card h-100 text-center border-0 card-hover">
+                     <div className="card-body p-4">
+                       <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
+                          <FaUsers />
+                       </div>
+                       <h5 className="card-title" style={{ color: '#ff5c00' }}>Team Tasks</h5>
+                       <p className="card-text text-muted">
+                         Collaborate with your team in real time with shared workspaces.
+                       </p>
+                       </div>
+                     </div>
+                  </div>
+             </div>
+           </div>
+       </section>
 
       {/* About Section */}
       <section className="py-5 bg-light">

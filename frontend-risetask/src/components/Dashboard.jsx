@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { 
@@ -23,18 +24,47 @@ const Dashboard = () => {
     totalTasks: 0,
     completedTasks: 0,
     pendingTasks: 0,
-    todayTasks: 0
+    todayTasks: 0,
+    overdueTasks: 0,
+    inProgressTasks: 0,
+    categories: [],
+    priorities: []
   });
 
-  // Mock data for demonstration
+  // Fetch real statistics from backend
   useEffect(() => {
-    setStats({
-      totalTasks: 45,
-      completedTasks: 28,
-      pendingTasks: 17,
-      todayTasks: 8
-    });
+    fetchStats();
   }, []);
+
+  const fetchStats = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/tasks/stats');
+      if (response.data.success) {
+        const { overview, categories, priorities } = response.data.data;
+        setStats({
+          totalTasks: overview.totalTasks,
+          completedTasks: overview.completedTasks,
+          pendingTasks: overview.pendingTasks,
+          todayTasks: overview.todayTasks,
+          overdueTasks: overview.overdueTasks,
+          inProgressTasks: overview.inProgressTasks,
+          categories,
+          priorities
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch statistics:', error);
+      // Fallback to mock data
+      setStats({
+        totalTasks: 0,
+        completedTasks: 0,
+        pendingTasks: 0,
+        todayTasks: 0,
+        overdueTasks: 0,
+        inProgressTasks: 0
+      });
+    }
+  };
 
   const doughnutData = {
     labels: ['Completed', 'Pending', 'In Progress'],
@@ -122,6 +152,40 @@ const Dashboard = () => {
                 </div>
                 <div className="align-self-center">
                   <FaCalendarDay className="fa-2x opacity-75" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Additional Stats Row */}
+      <div className="row mb-4">
+        <div className="col-md-6 mb-3">
+          <div className="card bg-danger text-white">
+            <div className="card-body">
+              <div className="d-flex justify-content-between">
+                <div>
+                  <h6 className="card-title">Overdue</h6>
+                  <h3>{stats.overdueTasks || 0}</h3>
+                </div>
+                <div className="align-self-center">
+                  <FaClock className="fa-2x opacity-75" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6 mb-3">
+          <div className="card text-white" style={{ backgroundColor: "#6f42c1" }}>
+            <div className="card-body">
+              <div className="d-flex justify-content-between">
+                <div>
+                  <h6 className="card-title">In Progress</h6>
+                  <h3>{stats.inProgressTasks || 0}</h3>
+                </div>
+                <div className="align-self-center">
+                  <FaRocket className="fa-2x opacity-75" />
                 </div>
               </div>
             </div>

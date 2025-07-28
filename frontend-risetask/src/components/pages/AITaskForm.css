@@ -1,28 +1,132 @@
-.ai-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
+/* src/components/Pages/AITaskForm.css */
+
+/* Base Styles */
+.animated-page {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.ai-icon-circle {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  font-size: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fd7e14;
+  color: #fff;
+  animation-fill-mode: both;
 }
 
-.ai-modal-box {
-  background: #fff;
+.ai-form-card {
+  background-color: #fff;
   padding: 30px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  animation-fill-mode: both;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ai-label-icon {
+  color: #fd7e14;
 }
 
-.btn-close {
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
+.ai-label {
+  font-weight: 600;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ai-input {
+  border-radius: 8px;
+  padding: 12px 18px;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
+
+.ai-input:focus {
+  border-color: #fd7e14;
+  box-shadow: 0 0 0 0.25rem rgba(255, 92, 0, 0.25);
+  outline: none;
+}
+
+.ai-submit-btn {
+  background-color: #fd7e14;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(255, 92, 0, 0.2);
+  width: fit-content;
+}
+
+.ai-submit-btn:hover {
+  background-color: #e65200;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 92, 0, 0.3);
+}
+
+/* Animations */
+/* میں نے animation کی مدت (duration) 2s سے کم کر کے 1s کر دی ہے */
+.slide-in-top {
+  animation: slideInTop 1s ease-in-out forwards;
+}
+
+@keyframes slideInTop {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-bottom {
+  animation: slideInBottom 1s ease-in-out forwards;
+}
+
+@keyframes slideInBottom {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pop-in {
+  animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.slide-in-left {
+  animation: slideInLeft 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  opacity: 0;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-right {
+  animation: slideInRight 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  opacity: 0;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

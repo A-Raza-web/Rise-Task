@@ -1,0 +1,165 @@
+/* src/pages/SchedulerPage.css */
+
+/* Base Styles */
+.scheduler-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f8f9fa;
+  overflow: hidden;
+}
+
+.scheduler-page-content {
+  width: 100%;
+  max-width: 650px;
+}
+
+.scheduler-header h3 {
+  color: #fd7e14;
+}
+
+.scheduler-header p {
+  color: #6c757d;
+}
+
+.scheduler-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #fd7e14;
+  color: #fff;
+  font-size: 2.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  animation-fill-mode: both;
+}
+
+.scheduler-icon-circle:hover {
+  transform: scale(1.1);
+}
+
+.scheduler-form-card {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  animation-fill-mode: both;
+}
+
+.scheduler-label {
+  font-weight: 600;
+  color: #495057;
+  display: flex;
+  align-items: center;
+}
+
+.scheduler-label .me-2 {
+  color: #fd7e14;
+}
+
+.scheduler-input {
+  border-radius: 8px;
+  padding: 12px 18px;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
+
+.scheduler-input:focus {
+  border-color: #fd7e14;
+  box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.25);
+}
+
+.scheduler-submit-btn {
+  background-color: #fd7e14;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 12px 25px;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(253, 126, 20, 0.2);
+  width: fit-content;
+}
+
+.scheduler-submit-btn:hover {
+  background-color: #e65200;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(253, 126, 20, 0.3);
+}
+
+/* Animations - Updated for a smoother sequence */
+/* میں نے تمام اینیمیشنز کو 1.2s کی درمیانی رفتار پر سیٹ کیا ہے */
+
+.animated-page {
+  animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+.slide-in-top {
+  animation: slideInTop 1.2s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes slideInTop {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-bottom {
+  animation: slideInBottom 1.2s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes slideInBottom {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pop-in {
+  animation: popIn 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  opacity: 0;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.slide-in-left {
+  animation: slideInLeft 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  opacity: 0;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+/* src/pages/SchedulerPage.css */
+
+/*... (پچھلا CSS کوڈ) ...*/
+
+.scheduler-form-card {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  animation-fill-mode: both;
+  /* نئی تبدیلی: overflow: hidden; شامل کریں */
+  overflow: hidden; 
+}
+
+/*... (باقی کا CSS کوڈ) ...*/

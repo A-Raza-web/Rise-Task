@@ -12,7 +12,11 @@ import {
   FaListAlt,
   FaCheck,
   FaHourglassHalf,
-  FaTrophy,  
+  FaTrophy,
+  FaCalendarAlt,
+  FaTag,
+  FaExclamationTriangle,
+  FaBell
 } from "react-icons/fa";
 
 
@@ -25,15 +29,33 @@ const TaskList = () => {
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [sortBy, setSortBy] = useState("createdAt");
+  const [sortOrder, setSortOrder] = useState("desc");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
 
-  const API_URL =
-    "https://2a361bfc-2f48-42b0-8ad6-5d8d8fec30e4-00-3sdsdmlcu7b3u.sisko.replit.dev/api/tasks";
+  const API_URL = "http://localhost:3000/api/tasks";
 
   const fetchTasks = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(API_URL);
-      setTasks(res.data);
+      const params = new URLSearchParams();
+      if (searchQuery) params.append('search', searchQuery);
+      if (filter !== 'all') {
+        if (filter === 'completed') params.append('completed', 'true');
+        if (filter === 'pending') params.append('completed', 'false');
+      }
+      if (categoryFilter) params.append('category', categoryFilter);
+      if (priorityFilter) params.append('priority', priorityFilter);
+      params.append('sortBy', sortBy);
+      params.append('sortOrder', sortOrder);
+
+      const res = await axios.get(`${API_URL}?${params.toString()}`);
+      if (res.data.success) {
+        setTasks(res.data.data);
+      } else {
+        console.error("Failed to fetch tasks:", res.data.message);
+      }
     } catch (err) {
       console.error("❌ Load Error:", err.message);
     } finally {
@@ -43,15 +65,32 @@ const TaskList = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [filter, searchQuery, sortBy, sortOrder, categoryFilter, priorityFilter]);
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this task?")) return;
     try {
-      await axios.delete(`${API_URL}/${id}`);
-      fetchTasks();
+      const response = await axios.delete(`${API_URL}/${id}`);
+      if (response.data.success) {
+        fetchTasks();
+      } else {
+        console.error("Delete failed:", response.data.message);
+      }
     } catch (err) {
       console.error("❌ Delete Error:", err.message);
+    }
+  };
+
+  const handleToggleComplete = async (id) => {
+    try {
+      const response = await axios.patch(`${API_URL}/${id}/toggle`);
+      if (response.data.success) {
+        fetchTasks();
+      } else {
+        console.error("Toggle failed:", response.data.message);
+      }
+    } catch (err) {
+      console.error("❌ Toggle Error:", err.message);
     }
   };
 
@@ -63,12 +102,16 @@ const TaskList = () => {
 
   const saveEdit = async () => {
     try {
-      await axios.put(`${API_URL}/${editId}`, {
+      const response = await axios.put(`${API_URL}/${editId}`, {
         title: editTitle,
         description: editDescription,
       });
-      setEditId(null);
-      fetchTasks();
+      if (response.data.success) {
+        setEditId(null);
+        fetchTasks();
+      } else {
+        console.error("Update failed:", response.data.message);
+      }
     } catch (err) {
       console.error("❌ Update Error:", err.message);
     }
@@ -79,16 +122,46 @@ const TaskList = () => {
     setShowDropdown(false);
   };
 
-  const filteredTasks = tasks.filter((task) => {
-    const matchesSearch =
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchQuery.toLowerCase());
+  // Helper functions
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case "low": return "#28a745";
+      case "medium": return "#ffc107";
+      case "high": return "#fd7e14";
+      case "urgent": return "#dc3545";
+      default: return "#6c757d";
+    }
+  };
 
-    if (filter === "all") return matchesSearch;
-    if (filter === "completed") return matchesSearch && task.completed;
-    if (filter === "pending") return matchesSearch && !task.completed;
-    return matchesSearch;
-  });
+  const getPriorityIcon = (priority) => {
+    switch (priority) {
+      case "urgent": return "🔥";
+      case "high": return "⚡";
+      case "medium": return "⭐";
+      case "low": return "📝";
+      default: return "📝";
+    }
+  };
+
+  const isOverdue = (dueDate) => {
+    return dueDate && new Date(dueDate) < new Date();
+  };
+
+  const formatDueDate = (dueDate) => {
+    if (!dueDate) return null;
+    const date = new Date(dueDate);
+    const now = new Date();
+    const diffTime = date.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 0) return `Overdue by ${Math.abs(diffDays)} days`;
+    if (diffDays === 0) return "Due today";
+    if (diffDays === 1) return "Due tomorrow";
+    return `Due in ${diffDays} days`;
+  };
+
+  // Since filtering is now done on the backend, we don't need to filter here
+  const filteredTasks = tasks;
   return (
     <div className="pt-5">
       <div className="row mb-4">
@@ -215,19 +288,81 @@ const TaskList = () => {
                     </>
                   ) : (
                     <>
-                      <h5 className={`fw-bold mb-1 ${task.completed ? "text-decoration-line-through text-muted" : ""}`}>{task.title}</h5>
+                      <div className="d-flex justify-content-between align-items-start mb-2">
+                        <h5 className={`fw-bold mb-1 ${task.completed ? "text-decoration-line-through text-muted" : ""}`}>
+                          {task.title}
+                        </h5>
+                        <div className="d-flex gap-2 align-items-center">
+                          {/* Priority Badge */}
+                          <span
+                            className="badge px-2 py-1"
+                            style={{
+                              backgroundColor: getPriorityColor(task.priority || 'medium'),
+                              color: 'white',
+                              fontSize: '0.75rem'
+                            }}
+                          >
+                            {getPriorityIcon(task.priority || 'medium')} {(task.priority || 'medium').toUpperCase()}
+                          </span>
+                          
+                          {/* Category Badge */}
+                          <span className="badge bg-secondary px-2 py-1" style={{ fontSize: '0.75rem' }}>
+                            <FaTag className="me-1" /> {task.category || 'General'}
+                          </span>
+                        </div>
+                      </div>
+
                       <p className="mb-2 text-muted">{task.description}</p>
+
+                      {/* Tags */}
+                      {task.tags && task.tags.length > 0 && (
+                        <div className="mb-2">
+                          {task.tags.map((tag, index) => (
+                            <span key={index} className="badge bg-light text-dark me-1 mb-1" style={{ fontSize: '0.7rem' }}>
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Due Date */}
+                      {task.dueDate && (
+                        <div className="mb-2">
+                          <small className={`d-flex align-items-center ${isOverdue(task.dueDate) ? 'text-danger fw-bold' : 'text-info'}`}>
+                            <FaCalendarAlt className="me-1" />
+                            {formatDueDate(task.dueDate)}
+                            {isOverdue(task.dueDate) && <FaExclamationTriangle className="ms-1" />}
+                          </small>
+                        </div>
+                      )}
+
+                      {/* Notifications */}
+                      {task.notifications?.enabled && (
+                        <div className="mb-2">
+                          <small className="text-muted d-flex align-items-center">
+                            <FaBell className="me-1" />
+                            Notifications enabled ({task.notifications.reminderTime}h before due)
+                          </small>
+                        </div>
+                      )}
+
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
+                          <button
+                            className={`btn btn-sm me-2 ${task.completed ? 'btn-outline-secondary' : 'btn-outline-success'}`}
+                            onClick={() => handleToggleComplete(task._id)}
+                          >
+                            <FaCheckCircle /> {task.completed ? 'Mark Pending' : 'Mark Complete'}
+                          </button>
                           <button className="btn btn-outline-warning btn-sm me-2" onClick={() => startEdit(task)}>
                             <FaEdit /> Edit
                           </button>
                           <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(task._id)}>
-                            <FaTrashAlt /> Delete
+                            <FaTrash /> Delete
                           </button>
                         </div>
                         <small className="text-muted">
-                          <FaCalendarAlt className="me-1" /> {new Date(task.createdAt).toLocaleDateString()}
+                          <FaCalendarAlt className="me-1" /> {new Date(task.createdAt || task.updatedAt).toLocaleDateString()}
                         </small>
                       </div>
                     </>
@@ -244,12 +379,14 @@ const TaskList = () => {
         <div className="mt-4">
           <div className="d-flex justify-content-between mb-2">
             <span className="fw-bold">Overall Progress</span>
-            <span className="fw-bold text-orange">{progressPercent}%</span>
+            <span className="fw-bold text-orange">
+              {Math.round((tasks.filter(t => t.completed).length / tasks.length) * 100)}%
+            </span>
           </div>
           <div className="progress" style={{ height: "10px" }}>
             <div
               className="progress-bar bg-orange progress-bar-striped progress-bar-animated"
-              style={{ width: `${progressPercent}%` }}
+              style={{ width: `${Math.round((tasks.filter(t => t.completed).length / tasks.length) * 100)}%` }}
             ></div>
           </div>
         </div>

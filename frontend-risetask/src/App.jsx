@@ -7,6 +7,7 @@ import TaskList from "./components/TaskList";
 import Home from "./components/Home";
 import SchedulerPage from './components/pages/SchedulerPage';
 import AITaskForm from "./components/pages/AITaskForm";
+import TeamTasksPage from './components/pages/TeamTasksPage'; 
 import Dashboard from "./components/Dashboard";
 import Settings from "./components/Settings";
 import About from "./components/About";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/create-task" element={<TaskForm />} />
         <Route path="/scheduler" element={<SchedulerPage />} />
         <Route path="/ai-scheduler" element={<AITaskForm />} />
+        <Route path="/team-tasks" element={<TeamTasksPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tasks" element={
           <>
