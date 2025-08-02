@@ -14,7 +14,7 @@ import {
   FaChartPie, 
   FaRocket
 } from "react-icons/fa";
-import "./Dashboard.css"
+import "./Dashboard.css";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
@@ -31,7 +31,6 @@ const Dashboard = () => {
     priorities: []
   });
 
-  // Fetch real statistics from backend
   useEffect(() => {
     fetchStats();
   }, []);
@@ -54,14 +53,14 @@ const Dashboard = () => {
       }
     } catch (error) {
       console.error('Failed to fetch statistics:', error);
-      // Fallback to mock data
+      // Fallback to mock data for demonstration
       setStats({
-        totalTasks: 0,
-        completedTasks: 0,
-        pendingTasks: 0,
-        todayTasks: 0,
-        overdueTasks: 0,
-        inProgressTasks: 0
+        totalTasks: 45,
+        completedTasks: 28,
+        pendingTasks: 12,
+        inProgressTasks: 5,
+        todayTasks: 3,
+        overdueTasks: 7,
       });
     }
   };
@@ -69,36 +68,54 @@ const Dashboard = () => {
   const doughnutData = {
     labels: ['Completed', 'Pending', 'In Progress'],
     datasets: [{
-      data: [28, 12, 5],
+      data: [stats.completedTasks, stats.pendingTasks, stats.inProgressTasks],
       backgroundColor: [
-        '#28a745',
-        '#ffc107',
-        '#17a2b8'
+        '#28a745', // Success
+        '#ffc107', // Warning
+        '#007bff'  // Primary
+      ],
+      hoverBackgroundColor: [
+        '#218838',
+        '#d39e00',
+        '#0056b3'
       ],
       borderWidth: 2
     }]
+  };
+  
+  const doughnutOptions = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true, // یہ لائن لیجنڈ کو ظاہر کرے گی
+        position: 'bottom', // لیجنڈ کو چارٹ کے نیچے دکھائے گا
+      },
+      tooltip: {
+        enabled: true, // ٹول ٹِپ کو فعال کرے گی
+      }
+    }
   };
 
   const barData = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [{
       label: 'Tasks Completed',
-      data: [5, 8, 3, 9, 6, 4, 7],
+      data: [5, 8, 3, 9, 6, 4, 7], // یہ ڈیٹا فی الحال ہارڈ کوڈڈ ہے
       backgroundColor: '#007bff',
       borderRadius: 4
     }]
   };
-
+  
   const orange = { color: "#fd7e14" };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 dashboard-container">
       <h2 className="mb-4"><FaChartPie className="me-2" style={orange} /> Dashboard</h2>
 
       {/* Stats Cards */}
       <div className="row mb-4">
         <div className="col-md-3 mb-3">
-          <div className="card text-white" style={{ backgroundColor: "#fd7e14" }}>
+          <div className="card text-white bg-primary-gradient shadow-sm border-0" style={{ backgroundColor: "#fd7e14" }}>
             <div className="card-body">
               <div className="d-flex justify-content-between">
                 <div>
@@ -113,7 +130,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="col-md-3 mb-3">
-          <div className="card bg-success text-white">
+          <div className="card text-white bg-success shadow-sm border-0">
             <div className="card-body">
               <div className="d-flex justify-content-between">
                 <div>
@@ -128,7 +145,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="col-md-3 mb-3">
-          <div className="card bg-warning text-white">
+          <div className="card text-white bg-warning shadow-sm border-0">
             <div className="card-body">
               <div className="d-flex justify-content-between">
                 <div>
@@ -143,7 +160,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="col-md-3 mb-3">
-          <div className="card bg-info text-white">
+          <div className="card text-white bg-info shadow-sm border-0">
             <div className="card-body">
               <div className="d-flex justify-content-between">
                 <div>
@@ -159,61 +176,27 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Additional Stats Row */}
+      {/* Additional Stats & Charts Row */}
       <div className="row mb-4">
         <div className="col-md-6 mb-3">
-          <div className="card bg-danger text-white">
-            <div className="card-body">
-              <div className="d-flex justify-content-between">
-                <div>
-                  <h6 className="card-title">Overdue</h6>
-                  <h3>{stats.overdueTasks || 0}</h3>
-                </div>
-                <div className="align-self-center">
-                  <FaClock className="fa-2x opacity-75" />
-                </div>
+          <div className="card h-100 shadow-sm border-0">
+            <div className="card-header">
+              <h5><FaChartPie className="me-2" style={orange} /> Task Distribution</h5>
+            </div>
+            <div className="card-body d-flex justify-content-center align-items-center">
+              <div style={{ height: '300px', width: '300px' }}>
+                <Doughnut data={doughnutData} options={doughnutOptions} />
               </div>
             </div>
           </div>
         </div>
         <div className="col-md-6 mb-3">
-          <div className="card text-white" style={{ backgroundColor: "#6f42c1" }}>
-            <div className="card-body">
-              <div className="d-flex justify-content-between">
-                <div>
-                  <h6 className="card-title">In Progress</h6>
-                  <h3>{stats.inProgressTasks || 0}</h3>
-                </div>
-                <div className="align-self-center">
-                  <FaRocket className="fa-2x opacity-75" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Charts */}
-      <div className="row">
-        <div className="col-md-6 mb-4">
-          <div className="card">
+          <div className="card h-100 shadow-sm border-0">
             <div className="card-header">
-              <h5>Task Distribution</h5>
+              <h5><FaCalendar className="me-2" style={orange} /> Weekly Progress</h5>
             </div>
-            <div className="card-body">
-              <div style={{ height: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Doughnut data={doughnutData} options={{ maintainAspectRatio: false }} />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6 mb-4">
-          <div className="card">
-            <div className="card-header">
-              <h5>Weekly Progress</h5>
-            </div>
-            <div className="card-body">
-              <div style={{ height: '300px' }}>
+            <div className="card-body d-flex justify-content-center align-items-center">
+              <div style={{ height: '300px', width: '100%' }}>
                 <Bar data={barData} options={{ maintainAspectRatio: false }} />
               </div>
             </div>
@@ -222,44 +205,40 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions */}
-       <div className="card mb-4"> 
-          <div className="card">
-            <div className="card-header">
-              <h5><FaRocket className="me-2" style={orange} /> Quick Actions</h5>
+      <div className="card mb-4 shadow-sm border-0">
+        <div className="card-header">
+          <h5><FaRocket className="me-2" style={orange} /> Quick Actions</h5>
+        </div>
+        <div className="card-body">
+          <div className="row text-center">
+            <div className="col-md-3 mb-3">
+              <button className="btn btn-lg w-100 text-white" style={{ backgroundColor: "#fd7e14" }}>
+                <FaPlus className="mb-2" /><br />
+                Add Task
+              </button>
             </div>
-            <div className="card-body">
-              <div className="row text-center">
-               <div className="col-md-3 mb-3">
-                <button className="btn btn-lg w-100 btn-orange">
-                  <FaPlus className="mb-2" /><br />
-                  Add Task
-                </button>
-              </div>
-
-
-                <div className="col-md-3 mb-3">
-                  <button className="btn btn-outline-success btn-lg w-100">
-                    <FaCalendar className="mb-2" /><br />
-                    Schedule
-                  </button>
-                </div>
-                <div className="col-md-3 mb-3">
-                  <button className="btn btn-outline-info btn-lg w-100">
-                    <FaRobot className="mb-2" /><br />
-                    AI Assistant
-                  </button>
-                </div>
-                <div className="col-md-3 mb-3">
-                  <button className="btn btn-outline-warning btn-lg w-100">
-                    <FaDownload className="mb-2" /><br />
-                    Export
-                  </button>
-                </div>
-              </div>
+            <div className="col-md-3 mb-3">
+              <button className="btn btn-lg w-100 btn-outline-success">
+                <FaCalendar className="mb-2" /><br />
+                Schedule
+              </button>
+            </div>
+            <div className="col-md-3 mb-3">
+              <button className="btn btn-lg w-100 btn-outline-info">
+                <FaRobot className="mb-2" /><br />
+                AI Assistant
+              </button>
+            </div>
+            <div className="col-md-3 mb-3">
+              <button className="btn btn-lg w-100 btn-outline-warning">
+                <FaDownload className="mb-2" /><br />
+                Export
+              </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

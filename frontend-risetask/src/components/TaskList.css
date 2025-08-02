@@ -1,0 +1,53 @@
+/* Custom CSS for TaskList component */
+
+/* Main orange color */
+.text-orange {
+  color: #fd7e14;
+}
+
+/* Filled Orange Button */
+.btn-orange-filled {
+  background-color: #fd7e14;
+  color: white;
+  border-color: #fd7e14;
+}
+.btn-orange-filled:hover {
+  background-color: #e06c0f;
+  border-color: #e06c0f;
+  color: white;
+}
+
+/* Outlined Orange Button */
+.btn-outline-orange {
+  color: #fd7e14;
+  border-color: #fd7e14;
+}
+.btn-outline-orange:hover {
+  background-color: #fd7e14;
+  color: white;
+}
+
+/* Completed Task Card */
+.task-completed-card {
+  background-color: #d1e7dd; /* Light green background */
+  border-color: #badbcc;
+  opacity: 0.8;
+}
+
+/* Progress bar animation */
+.progress-bar-animated {
+  animation: progress-bar-stripes 1s linear infinite;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+}
+
+.list-group-item.active {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+}

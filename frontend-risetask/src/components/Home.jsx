@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import heroBg from "../assets/img.webp"; 
@@ -249,9 +250,11 @@ const Home = () => {
                   </li>
                 </ul>
 
+               <Link to="/about">
                 <button className="btn btn-orange-filled mt-3">
                   Learn More
                 </button>
+              </Link>
               </div>
 
             </div>

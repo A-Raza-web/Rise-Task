@@ -1,239 +1,169 @@
-/* Existing styles */
+/* src/components/TaskForm.css */
+
+/* Main form container styling */
+.task-form.card {
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Heading style */
+.task-form-title {
+  font-weight: 700;
+  border-bottom: 2px solid #fd7e14;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem !important;
+}
+
+/* Section titles for organization */
+.task-form-section-title {
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+/* Icon styling */
+.task-form-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fd7e14;
+  color: white;
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+/* Custom priority button styling */
+.custom-priority-option {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+  user-select: none;
+}
+
+/* Priority option hover effect */
+.custom-priority-option:hover {
+  opacity: 0.8;
+}
+
+/* Active priority option styles */
+.custom-priority-option.active {
+  color: white;
+  font-weight: bold;
+}
+
+/* Priority option specific colors */
+.custom-priority-option[style*="background-color: #28a745"] {
+  border-color: #28a745;
+}
+.custom-priority-option[style*="background-color: #ffc107"] {
+  border-color: #ffc107;
+}
+.custom-priority-option[style*="background-color: #dc3545"] {
+  border-color: #dc3545;
+}
+.custom-priority-option[style*="background-color: #6f42c1"] {
+  border-color: #6f42c1;
+}
+
+/* Button styles to match the theme */
+.btn-orange-filled {
+  background-color: #fd7e14;
+  color: white;
+  border: 1px solid #fd7e14;
+  transition: all 0.3s ease;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.btn-orange-filled:hover {
+  background-color: #e66f00;
+  border-color: #e66f00;
+}
+
+.btn-orange-outline {
+  background-color: transparent;
+  color: #fd7e14;
+  border: 1px solid #fd7e14;
+  transition: all 0.3s ease;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.btn-orange-outline:hover {
+  background-color: #fd7e14;
+  color: white;
+}
+
+/* Validation feedback styling */
+.form-control.is-valid {
+  border-color: #28a745;
+  padding-right: 2.25rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.2.5-2.7 1.7-2.7h2.8c1.2 0 2.1 1.5 1.7 2.7L5.7 6.73c-.2.4-.6.6-1.1.6h-1.2c-.5 0-.9-.2-1.1-.6z'/%3e%3c/svg%3e");
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+  padding-right: 2.25rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+}
+
+/* Animations */
+.slide-in-left {
+  animation: slideInLeft 0.6s ease-in-out;
+}
+.slide-in-right {
+  animation: slideInRight 0.6s ease-in-out;
+}
+.slide-in-up {
+  animation: slideInUp 0.6s ease-in-out;
+}
 .fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
-}
-
-.slide-in-left {
-  animation: slideInLeft 0.7s ease-out forwards;
-  opacity: 0;
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.slide-in-right {
-  animation: slideInRight 0.7s ease-out forwards;
-  opacity: 0;
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Orange Button */
-.btn-orange {
-  background-color: #fd7e14;
-  color: #fff;
-  padding: 0.5rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-weight: 500;
-}
-
-.btn-orange:hover {
-  background-color: #e96c0a;
-  transform: translateY(-2px);
-}
-
-/* Orange Outline Button */
-.btn-orange-outline {
-  background-color: transparent;
-  color: #fd7e14;
-  border: 2px solid #fd7e14;
-  padding: 0.5rem 1.5rem;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.btn-orange-outline:hover {
-  background-color: #fd7e14;
-  color: #fff;
-  transform: translateY(-2px);
-}
-
-/* New and Modified Styles for Task Form */
-.task-form {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.task-form-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.task-form-group label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 12px;
-  font-weight: 600;
-  color: #343a40;
-}
-
-.task-form-icon-circle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background-color: #fd7e14;
-  color: #fff;
-  font-size: 1.4rem;
-  margin-bottom: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.task-form-group .form-control,
-.task-form-group .form-select {
-  width: 100%;
-  max-width: 400px;
-  border-radius: 8px;
-  border: 1px solid #ced4da;
-  padding: 10px 15px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.task-form-group .form-control:focus,
-.task-form-group .form-select:focus {
-  border-color: #fd7e14;
-  box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.25);
-  outline: none;
-}
-
-.badge {
-  font-size: 0.85rem !important;
-  padding: 0.4em 0.8em !important;
-  border-radius: 20px !important;
-}
-
-/* Success Message Styling */
-.alert-success.task-success-alert {
-  background-color: #d4edda;
-  color: #155724;
-  border-color: #c3e6cb;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-  font-weight: 500;
-  animation: fadeInOut 3s forwards;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(-10px); }
-  10% { opacity: 1; transform: translateY(0); }
-  90% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-10px); }
-}
-
-/* Priority Options Styling */
-.custom-priority-option {
-  padding: 8px 16px;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #f8f9fa;
-  color: #495057;
-  font-size: 0.9rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.custom-priority-option:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.custom-priority-option.active {
-  color: #fff;
-  font-weight: bold;
-}
-
-.custom-priority-option.low:hover {
-  background-color: #d1fae5;
-  border-color: #064330;
-  color: #064330;
-}
-
-.custom-priority-option.medium:hover {
-  background-color: #fef3c7;
-  border-color: #f59e0b;
-  color: #f59e0b;
-}
-
-.custom-priority-option.high:hover {
-  background-color: #ffe4e6;
-  border-color: #ff6b35;
-  color: #ff6b35;
-}
-
-.custom-priority-option.urgent:hover {
-  background-color: #fee2e2;
-  border-color: #ef4444;
-  color: #ef4444;
-}
-
-.custom-priority-option.low.active {
-  background-color: #064330;
-  color: #fff;
-  border-color: #06553b;
-}
-
-.custom-priority-option.medium.active {
-  background-color: #f59e0b;
-  color: #fff;
-  border-color: #f59e0b;
-}
-
-.custom-priority-option.high.active {
-  background-color: #ff6b35;
-  color: #fff;
-  border-color: #ff6b35;
-}
-
-.custom-priority-option.urgent.active {
-  background-color: #ef4444;
-  color: #fff;
-  border-color: #ef4444;
 }

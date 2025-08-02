@@ -10,7 +10,7 @@ const Signup = () => {
   }, []);
 
   return (
-    <div className="signup-wrapper container mt-5" data-aos="fade-up">
+    <div className="signup-wrapper container mt-5 mb-5"  data-aos="fade-up ">
       {/* Icon on Top */}
       <div className="text-center mb-3">
         <div
