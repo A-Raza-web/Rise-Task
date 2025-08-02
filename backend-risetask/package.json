@@ -1,111 +1,24 @@
 {
-  "name": "backend-risetask",
-  "version": "1.0.0",
-  "description": "Rise-Task Backend API - A comprehensive task management system with notifications, categories, and statistics",
-  "main": "dist/server.js",
-  "author": "Rise-Task Development Team",
-  "license": "ISC",
-  "keywords": [
-    "task-management",
-    "api",
-    "nodejs",
-    "typescript",
-    "mongodb",
-    "express",
-    "rest-api"
-  ],
-  "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
-  },
-  "scripts": {
-    "// Development Scripts": "",
-    "dev": "ts-node-dev --respawn --transpile-only --clear src/server.ts",
-    "dev:watch": "ts-node-dev --respawn --transpile-only --watch src src/server.ts",
-    "dev:debug": "ts-node-dev --respawn --transpile-only --inspect src/server.ts",
-    
-    "// Build Scripts": "",
-    "build": "npm run clean && tsc",
-    "build:watch": "tsc --watch",
-    "clean": "rimraf dist",
-    "prebuild": "npm run clean",
-    
-    "// Production Scripts": "",
-    "start": "node dist/server.js",
-    "start:prod": "NODE_ENV=production node dist/server.js",
-    
-    "// Testing Scripts": "",
-    "test": "node tests/test-runner.js",
-    "test:errors": "node tests/error-handling.test.js",
-    "test:api": "node tests/api.test.js",
-    "test:watch": "nodemon --watch tests --exec \"npm test\"",
-    "test:verbose": "TEST_VERBOSE=true npm test",
-    "test:no-reports": "npm test -- --no-reports",
-    
-    "// Database Scripts": "",
-    "db:migrate": "ts-node src/scripts/migrateData.ts",
-    "db:seed": "ts-node src/scripts/seedData.ts",
-    "db:reset": "npm run db:migrate && npm run db:seed",
-    
-    "// Utility Scripts": "",
-    "lint": "eslint src/**/*.ts --fix",
-    "format": "prettier --write src/**/*.ts",
-    "type-check": "tsc --noEmit",
-    "validate": "npm run type-check && npm run lint",
-    
-    "// SSL Certificate Scripts": "",
-    "ssl:generate": "openssl req -x509 -newkey rsa:4096 -keyout cert/key.pem -out cert/cert.pem -days 365 -nodes",
-    "ssl:info": "openssl x509 -in cert/cert.pem -text -noout",
-    
-    "// Maintenance Scripts": "",
-    "logs:clear": "rm -rf logs/*.log",
-    "cache:clear": "rm -rf node_modules/.cache",
-    "deps:check": "npm outdated",
-    "deps:update": "npm update",
-    "security:audit": "npm audit",
-    "security:fix": "npm audit fix",
-    
-    "// CI/CD Scripts": "",
-    "ci:install": "npm ci",
-    "ci:build": "npm run build",
-    "ci:test": "npm run test -- --no-reports --continue-on-failure",
-    "ci:validate": "npm run validate && npm run ci:test",
-    
-    "// Docker Scripts": "",
-    "docker:build": "docker build -t risetask-backend .",
-    "docker:run": "docker run -p 3000:3000 risetask-backend",
-    "docker:dev": "docker-compose up --build"
-  },
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.0",
-    "express": "^4.21.2",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.16.4"
+    "mongoose": "^8.17.0",
+    "nodemon": "^3.1.10"
   },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.3",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.0.15",
-    "eslint": "^8.57.0",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "prettier": "^3.2.5",
-    "nodemon": "^3.1.10",
-    "rimraf": "^5.0.5",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3"
+  "name": "backend-risetask",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-org/rise-task-backend.git"
-  },
-  "bugs": {
-    "url": "https://github.com/your-org/rise-task-backend/issues"
-  },
-  "homepage": "https://github.com/your-org/rise-task-backend#readme"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
