@@ -2,41 +2,31 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+// import heroBg from "../../public/images/hero-bg.jpg"; 
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
-import heroBg from "../assets/img.webp"; 
-import aboutImg from "../assets/about.jpg";
+import aboutImg from "../../public/images/about.jpg";
 import { FaBullseye, FaBolt, FaUsers } from "react-icons/fa";
-import { FaRegEdit, FaCalendarAlt, FaRobot } from "react-icons/fa";
+// import { FaRegEdit, FaCalendarAlt, FaRobot } from "react-icons/fa";
+import * as Icons from "react-icons/fa";
 import { FaCheckCircle, FaStar, FaQuoteLeft, FaTimesCircle } from "react-icons/fa";
 import { FaFacebook, FaTwitter, FaInstagram, FaEnvelope } from "react-icons/fa";
-
 import "./Home.css"
 
 
 
 const Home = () => {
-   const [stats, setStats] = useState({
-    tasksCompleted: 0,
-    productivityBoost: 0,
-    happyUsers: 0,
-  });
+  const [homeData, setHomeData] = useState(null);
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await axios.get('https://localhost:3000/api/stats');
-        setStats(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchStats();
-    const interval = setInterval(fetchStats, 5000);
-    return () => clearInterval(interval);
+    axios.get("http://localhost:5000/api/home")
+      .then((res) => setHomeData(res.data))
+      .catch((err) => console.error(err));
   }, []);
-
+ 
   const navigate = useNavigate();
+  if (!homeData) return <p>Loading...</p>;
+
 
 
 
@@ -45,166 +35,106 @@ const Home = () => {
       {/* Hero Section */}
     <div>
       {/* Hero Section with Background Image */}
-          <section
-        className="text-center py-5"
+      <section
+      className="text-center py-5"
+      style={{
+        backgroundImage: `url(${homeData.heroBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+      }}
+    >
+      <div
+        className="container text-white"
         style={{
-          backgroundImage: `url(${heroBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          minHeight: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          padding: "2rem",
+          borderRadius: "12px",
         }}
       >
-        <div
-          className="container text-white"
-          style={{
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-            padding: "2rem",
-            borderRadius: "12px",
-          }}
-        >
-          {/* Heading */}
-          <h1 className="display-4 mb-4 fade-up fade-up-delay-1">
-            Welcome to RiseTask
-          </h1>
+        {/* Heading */}
+        <h1 className="display-4 mb-4">{homeData.heading}</h1>
 
-          {/* Subtext */}
-          <p className="lead mb-5 fade-up fade-up-delay-2">
-            Manage your tasks smartly with AI-powered tools and boost your productivity.
-          </p>
+        {/* Subtext */}
+        <p className="lead mb-5">{homeData.subtext}</p>
 
-          {/* Stats Section */}
+        {/* Stats */}
         <div className="row mt-4">
-          <div className="col-md-4 fade-up fade-up-delay-2">
-            <h3 className="text-white">
-              <FaBullseye className="me-2" style={{ color: '#ff5c00' }} /> {stats.tasksCompleted}+
+          <div className="col-md-4">
+            <h3>
+              <FaBullseye className="me-2" style={{ color: '#ff5c00' }} />
+              {homeData.stats.tasksCompleted}+
             </h3>
-            <p className="text-white">Tasks Completed</p>
+            <p>Tasks Completed</p>
           </div>
-          <div className="col-md-4 fade-up fade-up-delay-3">
-            <h3 className="text-white">
-              <FaBolt className="me-2" style={{ color: '#ff5c00' }} /> {stats.productivityBoost}%
+          <div className="col-md-4">
+            <h3>
+              <FaBolt className="me-2" style={{ color: '#ff5c00' }} />
+              {homeData.stats.productivityBoost}%
             </h3>
-            <p className="text-white">Productivity Boost</p>
+            <p>Productivity Boost</p>
           </div>
-          <div className="col-md-4 fade-up fade-up-delay-4">
-            <h3 className="text-white">
-              <FaUsers className="me-2" style={{ color: '#ff5c00' }} /> {stats.happyUsers}+
+          <div className="col-md-4">
+            <h3>
+              <FaUsers className="me-2" style={{ color: '#ff5c00' }} />
+              {homeData.stats.happyUsers}+
             </h3>
-            <p className="text-white">Happy Users</p>
+            <p>Happy Users</p>
           </div>
         </div>
-      <div className="mt-4 d-flex justify-content-center gap-3">
-    {/* Outlined Orange Button */}
-       <div className="mt-4 d-flex justify-content-center gap-3">
-              <a
-                href="#features"
-                className="btn btn-lg btn-orange-transition fade-up fade-up-delay-3"
-              >
-                Explore Features
-              </a>
 
-              <button
-                className="btn btn-lg btn-orange-filled fade-up fade-up-delay-4"
-              >
-                Get Started Free
-              </button>
-            </div> 
-         </div>
+        {/* Buttons */}
+        <div className="mt-4 d-flex justify-content-center gap-3">
+          {homeData.buttons.map((btn, idx) => (
+            <a
+              key={idx}
+              href={btn.link}
+              className={`btn btn-lg ${
+                btn.type === "filled" ? "btn-orange-filled" : "btn-orange-transition"
+              }`}
+            >
+              {btn.text}
+            </a>
+          ))}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+  </div>
 
 
 
       {/* Features Section */}
-     <section id="features" className="py-5">
-          <div className="container">
-            <h2 className="text-center mb-5">Why Choose RiseTask?</h2>
-            <div className="row">
-
-              {/* Feature 1 */}
-           <div
-              className="col-md-3 mb-4"
-              onClick={() => navigate('/create-task')}
-              style={{ cursor: 'pointer' }}
-            >
-             <div className="card h-100 text-center border-0 card-hover">
-               <div className="card-body p-4">
-                 <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
-                  <FaRegEdit />
-                 </div>
-                 <h5 className="card-title" style={{ color: '#ff5c00' }}>Create Tasks</h5>
-                 <p className="card-text text-muted">
-                   Easily create and organize your daily tasks with intuitive interface.
-                 </p>
-               </div>
-             </div>
-           </div>
-
-
-              {/* Feature 2 */}
-
+         <section id="features" className="py-5">
+      <div className="container">
+        <h2 className="text-center mb-5">Why Choose RiseTask?</h2>
+        <div className="row">
+          {homeData.features.map((feature, index) => {
+            const Icon = Icons[feature.icon]; // 👈 dynamic icon
+            return (
               <div
+                key={index}
                 className="col-md-3 mb-4"
-                onClick={() => navigate('/scheduler')}
-                style={{ cursor: 'pointer' }}
+                onClick={() => navigate(feature.route)}
+                style={{ cursor: "pointer" }}
               >
                 <div className="card h-100 text-center border-0 card-hover">
                   <div className="card-body p-4">
-                    <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
-                      <FaCalendarAlt />
+                    <div className="mb-3" style={{ fontSize: "3rem", color: "#ff5c00" }}>
+                      {Icon && <Icon />}
                     </div>
-                    <h5 className="card-title" style={{ color: '#ff5c00' }}>Smart Scheduler</h5>
-                    <p className="card-text text-muted">
-                      Automatically prioritize your work based on deadlines and importance.
-                    </p>
+                    <h5 className="card-title" style={{ color: "#ff5c00" }}>
+                      {feature.title}
+                    </h5>
+                    <p className="card-text text-muted">{feature.description}</p>
                   </div>
                 </div>
               </div>
-
-
-                {/* Feature 3 */}
-                <div
-                  className="col-md-3 mb-4"
-                  onClick={() => navigate('/ai-scheduler')}
-                  style={{ cursor: 'pointer' }}
-                              >
-                    <div className="card h-100 text-center border-0 card-hover">
-                      <div className="card-body p-4">
-                        <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
-                          <FaRobot />
-                        </div>
-                        <h5 className="card-title" style={{ color: '#ff5c00' }}>AI Assistant</h5>
-                        <p className="card-text text-muted">
-                          Let AI suggest and optimize your workflow for maximum productivity.
-                        </p>
-                      </div>
-                    </div>
-                </div>
-             
-             
-              {/* Feature 4 */}
-                 <div
-                  className="col-md-3 mb-4"
-                  onClick={() => navigate('/team-tasks')}
-                  style={{ cursor: 'pointer' }}
-                >
-                   <div className="card h-100 text-center border-0 card-hover">
-                     <div className="card-body p-4">
-                       <div className="mb-3" style={{ fontSize: '3rem', color: '#ff5c00' }}>
-                          <FaUsers />
-                       </div>
-                       <h5 className="card-title" style={{ color: '#ff5c00' }}>Team Tasks</h5>
-                       <p className="card-text text-muted">
-                         Collaborate with your team in real time with shared workspaces.
-                       </p>
-                       </div>
-                     </div>
-                  </div>
-             </div>
-           </div>
-       </section>
+            );
+          })}
+        </div>
+      </div>
+    </section>
 
       {/* About Section */}
       <section className="py-5 bg-light">

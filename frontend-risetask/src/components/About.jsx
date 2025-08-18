@@ -1,6 +1,6 @@
 // src/components/About.jsx
 import { FaReact, FaBootstrap, FaTasks, FaMoon, FaBars, FaHeart } from "react-icons/fa";
-import aboutImage from '../assets/aboutpage.png';
+import aboutImage from '../../public/images/aboutpage.png';
 import "../components/About.css"
 
 const About = () => {

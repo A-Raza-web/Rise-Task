@@ -12,7 +12,7 @@ import {
   FaSignInAlt,
   FaUserPlus
 } from "react-icons/fa";
-import riseLogo from "../assets/rise-icon.jpg"; // ✅ Replace with your RT logo image
+import riseLogo from "../../public/images/rise-icon.jpg"; // ✅ Replace with your RT logo image
 import NotificationCenter from "./NotificationCenter";
 import './MyNavbar.css';
 

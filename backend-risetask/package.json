@@ -12,6 +12,7 @@
   },
   "name": "backend-risetask",
   "version": "1.0.0",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
