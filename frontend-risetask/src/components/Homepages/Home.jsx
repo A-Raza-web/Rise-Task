@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaBullseye, FaBolt, FaUsers } from "react-icons/fa";
@@ -7,7 +7,7 @@ import "./Home.css";
 
 const Home = () => {
   const [homeData, setHomeData] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/home")
