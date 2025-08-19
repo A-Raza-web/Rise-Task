@@ -1,197 +1,28 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-// import heroBg from "../../public/images/hero-bg.jpg"; 
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
-import aboutImg from "../../public/images/about.jpg";
 import { FaBullseye, FaBolt, FaUsers } from "react-icons/fa";
-// import { FaRegEdit, FaCalendarAlt, FaRobot } from "react-icons/fa";
-import * as Icons from "react-icons/fa";
 import { FaCheckCircle, FaStar, FaQuoteLeft, FaTimesCircle } from "react-icons/fa";
 import { FaFacebook, FaTwitter, FaInstagram, FaEnvelope } from "react-icons/fa";
+import Home from './Homepages/Home';
+import Features  from './Homepages/Features';
+import About from "./Homepages/About";   
 import "./Home.css"
 
 
 
-const Home = () => {
-  const [homeData, setHomeData] = useState(null);
 
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/home")
-      .then((res) => setHomeData(res.data))
-      .catch((err) => console.error(err));
-  }, []);
- 
-  const navigate = useNavigate();
-  if (!homeData) return <p>Loading...</p>;
 
 
 
 
   return (
-    <div>
-      {/* Hero Section */}
-    <div>
-      {/* Hero Section with Background Image */}
-      <section
-      className="text-center py-5"
-      style={{
-        backgroundImage: `url(${homeData.heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        minHeight: "100vh",
-      }}
-    >
-      <div
-        className="container text-white"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
-          padding: "2rem",
-          borderRadius: "12px",
-        }}
-      >
-        {/* Heading */}
-        <h1 className="display-4 mb-4">{homeData.heading}</h1>
-
-        {/* Subtext */}
-        <p className="lead mb-5">{homeData.subtext}</p>
-
-        {/* Stats */}
-        <div className="row mt-4">
-          <div className="col-md-4">
-            <h3>
-              <FaBullseye className="me-2" style={{ color: '#ff5c00' }} />
-              {homeData.stats.tasksCompleted}+
-            </h3>
-            <p>Tasks Completed</p>
-          </div>
-          <div className="col-md-4">
-            <h3>
-              <FaBolt className="me-2" style={{ color: '#ff5c00' }} />
-              {homeData.stats.productivityBoost}%
-            </h3>
-            <p>Productivity Boost</p>
-          </div>
-          <div className="col-md-4">
-            <h3>
-              <FaUsers className="me-2" style={{ color: '#ff5c00' }} />
-              {homeData.stats.happyUsers}+
-            </h3>
-            <p>Happy Users</p>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="mt-4 d-flex justify-content-center gap-3">
-          {homeData.buttons.map((btn, idx) => (
-            <a
-              key={idx}
-              href={btn.link}
-              className={`btn btn-lg ${
-                btn.type === "filled" ? "btn-orange-filled" : "btn-orange-transition"
-              }`}
-            >
-              {btn.text}
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  </div>
-
-
-
-      {/* Features Section */}
-         <section id="features" className="py-5">
-      <div className="container">
-        <h2 className="text-center mb-5">Why Choose RiseTask?</h2>
-        <div className="row">
-          {homeData.features.map((feature, index) => {
-            const Icon = Icons[feature.icon]; // 👈 dynamic icon
-            return (
-              <div
-                key={index}
-                className="col-md-3 mb-4"
-                onClick={() => navigate(feature.route)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="card h-100 text-center border-0 card-hover">
-                  <div className="card-body p-4">
-                    <div className="mb-3" style={{ fontSize: "3rem", color: "#ff5c00" }}>
-                      {Icon && <Icon />}
-                    </div>
-                    <h5 className="card-title" style={{ color: "#ff5c00" }}>
-                      {feature.title}
-                    </h5>
-                    <p className="card-text text-muted">{feature.description}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-
-      {/* About Section */}
-      <section className="py-5 bg-light">
-          <div className="container">
-            <div className="row align-items-center">
-              
-              {/* Image Column */}
-              <div className="col-md-6 mb-4 mb-md-0">
-                <img
-                  src={aboutImg }
-                  alt="About RiseTask"
-                  className="img-fluid rounded shadow-sm"
-                />
-              </div>
-
-              {/* Text Column */}
-              <div className="col-md-6">
-                <h2 className="mb-4" style={{ color: "#ff5c00" }}>
-                  About RiseTask
-                </h2>
-                <p className="text-muted mb-3" style={{ fontSize: "1.1rem" }}>
-                  RiseTask is your intelligent task management assistant – built with
-                  productivity, AI integration, and collaboration in mind.
-                </p>
-                <ul className="list-unstyled">
-                  <li className="mb-3 d-flex align-items-start">
-                    <FaCheckCircle className="me-2" style={{ color: "#ff5c00", fontSize: "1.2rem", marginTop: "4px" }} />
-                    <div>
-                      <strong>Smart Scheduling:</strong> Organize tasks with priority & AI.
-                    </div>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <FaRobot className="me-2" style={{ color: "#ff5c00", fontSize: "1.2rem", marginTop: "4px" }} />
-                    <div>
-                      <strong>AI Insights:</strong> Get suggestions to improve your workflow.
-                    </div>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <FaUsers className="me-2" style={{ color: "#ff5c00", fontSize: "1.2rem", marginTop: "4px" }} />
-                    <div>
-                      <strong>Team Collaboration:</strong> Stay synced with real-time workspaces.
-                    </div>
-                  </li>
-                </ul>
-
-               <Link to="/about">
-                <button className="btn btn-orange-filled mt-3">
-                  Learn More
-                </button>
-              </Link>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-
+        <>
+       <Home/>
+       <Features/>
+       <About />  
 
       {/* Testimonials Section */}
       <section className="py-5">
@@ -372,9 +203,8 @@ const Home = () => {
             </div>
           </div>
         </footer>
-    </div>
+    </>
   );
-}
 
 
 export default Home;
