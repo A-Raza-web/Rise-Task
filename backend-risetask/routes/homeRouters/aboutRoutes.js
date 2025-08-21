@@ -1,6 +1,6 @@
 // routes/aboutRoutes.js
 import express from "express";
-import About from "../models/About.js";
+import About from "../../models/homeModels/About.js";
 
 const router = express.Router();
 

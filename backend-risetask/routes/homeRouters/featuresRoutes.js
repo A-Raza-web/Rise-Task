@@ -1,5 +1,5 @@
 import express from "express";
-import Feature from "../models/Feature.js";
+import Feature from "../../models/homeModels/Feature.js";
 
 const router = express.Router();
 

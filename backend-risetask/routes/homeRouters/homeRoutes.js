@@ -1,6 +1,6 @@
-const express = require("express");
+import  express from "express" ;
 const router = express.Router();
-const Home = require("../models/Home");
+import  Home  from  "../../models/homeModels/Home.js";
 
 // POST route - Save new home data
 router.post("/", async (req, res) => {
@@ -24,4 +24,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

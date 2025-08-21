@@ -5,14 +5,25 @@ import axios from "axios";
 
 export default function Features() {
   const [features, setFeatures] = useState([]);
+  const [loading, setLoading] = useState(true); // 🔹 loading state add
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/home") // 👈 backend API
-      .then((res) => setFeatures(res.data.features))
-      .catch((err) => console.error("Error fetching features:", err));
+      .get("http://localhost:5000/api/features") // 👈 yahan API sahi route use karo
+      .then((res) => {
+        setFeatures(res.data.features);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching features:", err);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return <p className="text-center mt-5">Loading...</p>;
+  }
 
   return (
     <section id="features" className="py-5">
