@@ -1,6 +1,6 @@
 import  express from "express" ;
 const router = express.Router();
-import  Home  from  "../../models/homeModels/Home.js";
+import  Home  from  "../../models/homeModels/Hero.js";
 
 // POST route - Save new home data
 router.post("/", async (req, res) => {

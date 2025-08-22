@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaBullseye, FaBolt, FaUsers } from "react-icons/fa";
-import "./Home.css";
+import "./Hero.css";
 
 const Home = () => {
   const [homeData, setHomeData] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/home")
+    axios.get("http://localhost:5000/api/hero")
       .then((res) => setHomeData(res.data))
       .catch((err) => console.error(err));
   }, []);

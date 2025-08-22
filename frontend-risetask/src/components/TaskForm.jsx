@@ -126,6 +126,7 @@ const TaskForm = ({ onTaskAdded }) => {
       setIsSubmitting(false);
     }
   };
+  
 
   const getPriorityColor = (p) => {
     switch (p) {
@@ -182,6 +183,7 @@ const TaskForm = ({ onTaskAdded }) => {
           {errors.title && <div className="invalid-feedback">{errors.title}</div>}
           <div className="form-text">{title.length}/100 characters</div>
         </div>
+        
 
         {/* Description */}
         <div className="col-md-6 task-form-group slide-in-right">
@@ -252,39 +254,70 @@ const TaskForm = ({ onTaskAdded }) => {
         <div className="col-md-6 task-form-group slide-in-left" style={{ animationDelay: '0.5s' }}>
           <label htmlFor="taskCategory" className="form-label">Category</label>
           <div className="d-flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <div
-                key={cat._id}
-                className={`custom-priority-option ${cat.name === category ? 'active' : ''}`}
-                style={{
-                  backgroundColor: cat.name === category ? getCategoryColor(cat.name) : 'white',
-                  color: cat.name === category ? 'white' : '#6c757d',
-                  borderColor: cat.name === category ? getCategoryColor(cat.name) : '#ccc'
-                }}
-                onClick={() => setCategory(cat.name)}
-              >
-                {cat.name}
-              </div>
-            ))}
+              {categories.map((cat) => (
+                <div
+                  key={cat._id}
+                  className={`custom-priority-option ${cat.name === category ? 'active' : ''}`}
+                  style={{
+                    backgroundColor: cat.name === category ? getCategoryColor(cat.name) : 'white',
+                    color: cat.name === category ? 'white' : '#6c757d',
+                    borderColor: cat.name === category ? getCategoryColor(cat.name) : '#ccc'
+                  }}
+                  onClick={() => setCategory(cat.name)}
+                >
+                  {cat.name}
+                </div>
+              ))}
+            </div>
+            <div className="form-text text-muted">Choose a category for better organization</div>
           </div>
-          <div className="form-text text-muted">Choose a category for better organization</div>
-        </div>
 
-        {/* Tags Input */}
-        <div className="col-md-6 task-form-group slide-in-right" style={{ animationDelay: '0.6s' }}>
-          <label htmlFor="taskTags" className="form-label">Tags</label>
+          {/* Tags Input */}
+            <div className="col-md-6 task-form-group slide-in-right" style={{ animationDelay: '0.6s' }}>
+              <label htmlFor="taskTags" className="form-label">Tags</label>
+              <input
+                id="taskTags"
+                type="text"
+                className="form-control shadow-sm"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="e.g., work, personal, urgent"
+                disabled={isSubmitting}
+              />
+              <div className="form-text text-muted">Add tags separated by commas for easy searching</div>
+            </div>
+          </div>
+          <h5 className="task-form-section-title" style={{ color: orange }}>
+      <FaBell className="me-2" /> Notifications
+    </h5>
+    <hr />
+    <div className="row mb-4">
+      <div className="col-md-6">
+        <div className="form-check">
           <input
-            id="taskTags"
-            type="text"
-            className="form-control shadow-sm"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-            placeholder="e.g., work, personal, urgent"
-            disabled={isSubmitting}
+            className="form-check-input"
+            type="checkbox"
+            checked={notificationsEnabled}
+            onChange={() => setNotificationsEnabled(!notificationsEnabled)}
           />
-          <div className="form-text text-muted">Add tags separated by commas for easy searching</div>
+          <label className="form-check-label">Enable Notifications</label>
         </div>
       </div>
+      {notificationsEnabled && (
+        <div className="col-md-6">
+          <label className="form-label">Reminder Time (hours before)</label>
+          <input
+            type="number"
+            className="form-control"
+            value={reminderTime}
+            onChange={(e) => setReminderTime(e.target.value)}
+            min="1"
+            max="72"
+          />
+        </div>
+      )}
+    </div>
+
 
 
       {/* Action Buttons Section */}

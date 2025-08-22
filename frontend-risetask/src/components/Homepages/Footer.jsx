@@ -11,7 +11,8 @@ function Footer() {
       .catch(err => console.error(err));
   }, []);
 
-  if (!footer) return null;
+  if (!footer) 
+    return <p className="text-center mt-5">Loading...</p>;
 
   return (
     <footer className="bg-dark text-white pt-4 pb-3 mt-5">
