@@ -15,9 +15,9 @@ const NotificationCenter = () => {
   const [notifications, setNotifications] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const API_URL = 'http://localhost:3000/api/notifications';
+  const API_URL = 'http://localhost:5000/api/notifications';
 
   useEffect(() => {
     fetchNotifications();

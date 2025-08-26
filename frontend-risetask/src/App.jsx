@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from 'aos';
 
-import TaskForm from "./components/TaskForm";
+import TaskForm from "./components/TaskForm/TaskForm";
 import TaskList from "./components/TaskList";
 import Home from "./components/Home";
 import SchedulerPage from './components/pages/SchedulerPage';
