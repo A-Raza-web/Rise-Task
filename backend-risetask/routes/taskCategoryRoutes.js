@@ -1,16 +1,23 @@
 import express from "express";
-import Category from "../models/TaskCategory.js"; // اپنے model کا path درست رکھو
+import Category from "../models/TaskCategory.js"
+
 const router = express.Router();
 
-// GET category by ID
-router.get("/:id", async (req, res) => {
+// ✅ Get all categories
+router.get("/", async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
-    if (!category) return res.status(404).json({ success: false, message: "Category not found" });
-
-    res.json({ success: true, data: category });
-  } catch (err) {
-    res.status(500).json({ success: false, message: "Server error", error: err.message });
+    const categories = await Category.find(); // <-- سارے documents لے آ رہا ہے
+    res.status(200).json({
+      success: true,
+      count: categories.length,
+      data: categories,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching categories",
+      error: error.message,
+    });
   }
 });
 
