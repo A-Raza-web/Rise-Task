@@ -73,3 +73,8 @@
   color: white;
   border-color: #ff5c00;
 }
+.navbar-nav .dropdown-menu .dropdown-item:hover,
+.navbar-nav .dropdown-menu .dropdown-item:focus {
+  background-color: transparent; /* Makes the background transparent on hover */
+  color: #fd7e14; /* Changes the text color to your desired orange */
+}

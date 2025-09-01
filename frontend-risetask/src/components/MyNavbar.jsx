@@ -1,6 +1,6 @@
 // src/components/MyNavbar.jsx
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
   FaHome,
@@ -10,9 +10,11 @@ import {
   FaCogs,
   FaEnvelope,
   FaSignInAlt,
-  FaUserPlus
+  FaUserPlus,
+  FaPlusCircle,
+  FaList
 } from "react-icons/fa";
-import riseLogo from "../../public/images/rise-icon.jpg"; // ✅ Replace with your RT logo image
+import riseLogo from "../../public/images/rise-icon.jpg";
 import NotificationCenter from "./NotificationCenter";
 import './MyNavbar.css';
 
@@ -42,17 +44,29 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/">
               <FaHome className="me-1" style={{ color: "#fd7e14" }} /> Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/tasks">
-              <FaTasks className="me-1" style={{ color: "#fd7e14" }} /> Tasks
-            </Nav.Link>
-            <Nav.Link as={Link} to="/about">
-              <FaInfoCircle className="me-1" style={{ color: "#fd7e14" }} /> About
-            </Nav.Link>
+
+            {/* Change "Tasks" from a single link to a dropdown menu */}
+            <NavDropdown title={
+              <span>
+                <FaTasks className="me-1" style={{ color: "#fd7e14" }} /> Tasks
+              </span>
+            } id="tasks-dropdown">
+              <NavDropdown.Item as={Link} to="/add-task">
+                <FaPlusCircle className="me-1" style={{ color: "#fd7e14" }} /> Add Task
+              </NavDropdown.Item>
+               <NavDropdown.Item as={Link} to="/tasks">
+                <FaList className="me-1" style={{ color: "#fd7e14" }} /> View Tasks
+              </NavDropdown.Item>
+            </NavDropdown>
+
             <Nav.Link as={Link} to="/dashboard">
               <FaChartBar className="me-1" style={{ color: "#fd7e14" }} /> Dashboard
             </Nav.Link>
             <Nav.Link as={Link} to="/settings">
               <FaCogs className="me-1" style={{ color: "#fd7e14" }} /> Settings
+            </Nav.Link>
+            <Nav.Link as={Link} to="/about">
+              <FaInfoCircle className="me-1" style={{ color: "#fd7e14" }} /> About
             </Nav.Link>
             <Nav.Link as={Link} to="/contact">
               <FaEnvelope className="me-1" style={{ color: "#fd7e14" }} /> Contact

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from 'aos';
 
 import TaskForm from "./components/TaskForm/TaskForm";
-import TaskList from "./components/TaskList";
+import TaskList from "./components/TaskList/TaskList";
 import Home from "./components/Home";
 import SchedulerPage from './components/pages/SchedulerPage';
 import AITaskForm from "./components/pages/AITaskForm";
@@ -28,17 +28,12 @@ function App() {
       <MyNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/create-task" element={<TaskForm />} />
+        <Route path="/add-task" element={<TaskForm />} />        
+        <Route path="/tasks" element={<TaskList />} />        
         <Route path="/scheduler" element={<SchedulerPage />} />
         <Route path="/ai-scheduler" element={<AITaskForm />} />
         <Route path="/team-tasks" element={<TeamTasksPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/tasks" element={
-          <>
-            <TaskForm />
-            <TaskList />
-          </>
-        } />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings setDarkMode={setDarkMode} />} />
         <Route path="/contact" element={<Contact />} />
