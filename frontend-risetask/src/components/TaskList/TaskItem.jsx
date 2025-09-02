@@ -22,10 +22,11 @@ const TaskItem = ({ task, editId, setEditId, editTitle, setEditTitle, editDescri
   const { _id, title, description, completed, priority, createdAt, updatedAt } = task;
   const { color, icon } = getPriorityData(priority);
 
+  // ✅ Delete Task
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       try {
-        await fetch(`${API_URL}/api/tasks/${_id}`, { method: "DELETE" });
+        await fetch(`${API_URL}/${_id}`, { method: "DELETE" });
         fetchTasks();
       } catch (err) {
         console.error("Failed to delete task:", err);
@@ -33,15 +34,18 @@ const TaskItem = ({ task, editId, setEditId, editTitle, setEditTitle, editDescri
     }
   };
 
-  const handleToggleComplete = async () => {
+  // ✅ Toggle Complete Task
+const handleToggleComplete = async () => {
     try {
-      await fetch(`${API_URL}/api/tasks/${_id}/toggle`, { method: "PATCH" });
-      fetchTasks();
+        await fetch(`${API_URL}/${_id}/toggle`, { method: "PATCH" }); // URL کو درست کر دیا گیا ہے
+        fetchTasks();
     } catch (err) {
-      console.error("Failed to toggle task:", err);
+        console.error("Failed to toggle task:", err);
     }
-  };
+};
 
+
+  // ✅ Start Edit
   const startEdit = () => {
     setEditId(_id);
     setEditTitle(title);
@@ -49,7 +53,7 @@ const TaskItem = ({ task, editId, setEditId, editTitle, setEditTitle, editDescri
   };
 
   return (
-   <div className="col-12 col-md-6 col-lg-4 mb-3 px-1">    
+    <div className="col-12 col-md-6 col-lg-4 mb-3 px-1">
       <div className={`card shadow-sm border border-light card-task-hover priority-${priority} ${completed ? "bg-success bg-opacity-10" : ""}`}>
         <div className="card-body">
           {editId === _id ? (
@@ -75,7 +79,10 @@ const TaskItem = ({ task, editId, setEditId, editTitle, setEditTitle, editDescri
 
               {/* Action Buttons Section */}
               <div className="d-flex flex-column flex-sm-row gap-2 mt-auto">
-                <button className={`btn btn-sm ${completed ? "btn-outline-secondary" : "btn-outline-success"}`} onClick={handleToggleComplete}>
+                <button
+                  className={`btn btn-sm ${completed ? "btn-outline-secondary" : "btn-outline-success"}`}
+                  onClick={handleToggleComplete}
+                >
                   <FaCheckCircle className="me-1" /> {completed ? "Mark Pending" : "Mark Complete"}
                 </button>
                 <button className="btn btn-outline-warning btn-sm" onClick={startEdit}>

@@ -22,9 +22,9 @@ const app = express();
 
 // ✅ CORS Middleware (ONLY once)
 app.use(cors({
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  origin: "http://localhost:5173", // frontend ka port
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],  // ✅ PATCH add kiya
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 // ✅ Body parser

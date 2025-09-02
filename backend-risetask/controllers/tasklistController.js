@@ -17,7 +17,7 @@ class TaskController {
     try {
       const { title, description } = req.body;
 
-      const newTask = new Task({ title, description });
+      const newTask = new Task({ title, description, completed: false }); // default
       await newTask.save();
 
       res.status(201).json(newTask);
@@ -60,6 +60,27 @@ class TaskController {
       res.status(500).json({ message: "Server error while deleting task" });
     }
   }
+
+  // ✅ Toggle task complete/incomplete
+static async toggleTask(req, res) {
+  try {
+    const { id } = req.params;
+    const task = await Task.findById(id);
+
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    task.completed = !task.completed; // flip karega true/false
+    await task.save();
+
+    res.status(200).json(task);
+  } catch (error) {
+    console.error("❌ Error toggling task:", error.message);
+    res.status(500).json({ message: "Server error while toggling task" });
+  }
+}
+
 }
 
 export default TaskController;

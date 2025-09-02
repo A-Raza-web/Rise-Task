@@ -8,7 +8,7 @@ import Home from "./components/Home";
 import SchedulerPage from './components/pages/SchedulerPage';
 import AITaskForm from "./components/pages/AITaskForm";
 import TeamTasksPage from './components/pages/TeamTasksPage'; 
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Settings from "./components/Settings";
 import About from "./components/About";
 import Contact from "./components/Contact";
