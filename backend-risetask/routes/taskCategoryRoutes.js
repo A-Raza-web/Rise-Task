@@ -6,7 +6,7 @@ const router = express.Router();
 // ✅ Get all categories
 router.get("/", async (req, res) => {
   try {
-    const categories = await Category.find(); // <-- سارے documents لے آ رہا ہے
+    const categories = await Category.find(); 
     res.status(200).json({
       success: true,
       count: categories.length,

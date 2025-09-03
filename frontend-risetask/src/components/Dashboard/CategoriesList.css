@@ -1,0 +1,82 @@
+/* CategoriesList.css */
+
+.text-orange {
+    color: #fd7e14;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+.category-box {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.category-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+}
+
+.category-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.category-box:hover .category-icon {
+    transform: translateY(-5px); 
+}
+.category-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.category-footer {
+    margin-top: 1rem;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    width: 100%;
+}
+
+.category-count {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.count-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* --- Responsive Layout --- */
+
+@media (min-width: 576px) {
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .categories-grid {
+        grid-template-columns: repeat(4, 1fr); 
+    }
+}
