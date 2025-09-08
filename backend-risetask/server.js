@@ -17,6 +17,7 @@ import dashboardRoutes from "./routes/dashboardRoutes.js"
 import settingsRoutes from "./routes/settingsRoutes.js";
 import authForm from "./routes/authRoutes.js";
 
+
 // ✅ .env load
 dotenv.config();
 console.log("JWT_SECRET:", process.env.JWT_SECRET);
@@ -49,6 +50,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use('/api/tasks', dashboardRoutes); 
 app.use("/api/settings", settingsRoutes);
 app.use("/api/auth", authForm);
+
 
 // ✅ MongoDB connect
 mongoose.connect(process.env.MONGO_URI, {})

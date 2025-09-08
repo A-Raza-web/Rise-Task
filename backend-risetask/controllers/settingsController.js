@@ -1,35 +1,42 @@
-import User from "../models/User.js";
+import Settings from "../models/settingsModel.js";
 
-// ✅ Get user settings
+// ✅ GET user settings
 export const getSettings = async (req, res) => {
   try {
-    const { userId } = req.params;
+    let settings = await Settings.findOne({ user: req.user._id });
 
-    const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!settings) {
+      settings = await Settings.create({ user: req.user._id });
+    }
 
-    res.json(user.settings);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.json(settings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching settings" });
   }
 };
 
-// ✅ Update user settings
+// ✅ UPDATE user settings
 export const updateSettings = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const { settings } = req.body;
+    const { notifications, darkMode, autoSave, language, timezone } = req.body;
 
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { settings },
-      { new: true }
-    );
+    let settings = await Settings.findOne({ user: req.user._id });
 
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!settings) {
+      settings = new Settings({ user: req.user._id });
+    }
 
-    res.json(user.settings);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    settings.notifications = notifications ?? settings.notifications;
+    settings.darkMode = darkMode ?? settings.darkMode;
+    settings.autoSave = autoSave ?? settings.autoSave;
+    settings.language = language ?? settings.language;
+    settings.timezone = timezone ?? settings.timezone;
+
+    const updated = await settings.save();
+    res.json(updated);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating settings" });
   }
 };
