@@ -6,36 +6,65 @@ import Category from '../models/TaskCategory.js';
 class TasksController {
     async getTaskStats(req, res) {
         try {
-            // 1. Fetch overview stats from the Task collection
+            // ... (your existing overview stats code) ...
+
             const totalTasks = await Task.countDocuments();
-            const completedTasks = await Task.countDocuments({ status: 'completed' });
-            const pendingTasks = await Task.countDocuments({ status: 'pending' });
-            const inProgressTasks = await Task.countDocuments({ status: 'in-progress' });
-            
-            // Get today's tasks
+            const completedTasks = await Task.countDocuments({ completed: true });
+            const pendingTasks = await Task.countDocuments({ completed: false });
+            const inProgressTasks = 0; 
             const startOfToday = new Date().setHours(0, 0, 0, 0);
             const todayTasks = await Task.countDocuments({ createdAt: { $gte: startOfToday } });
-            
-            // 2. Aggregate task counts by category name
+            const today = new Date();
+            const overdueTasks = await Task.countDocuments({
+                dueDate: { $lt: today },
+                completed: false 
+            });
+
+            // Aggregate task counts by category name
             const tasksByCategoryCounts = await Task.aggregate([
                 { $group: { _id: '$category', count: { $sum: 1 } } }
             ]);
 
-            // 3. Find all categories to get their details (color, icon)
             const allCategories = await Category.find({});
-
-            // 4. Merge the two datasets to create a single array
             const categoriesWithCounts = allCategories.map(category => {
                 const taskCount = tasksByCategoryCounts.find(item => item._id === category.name);
                 return {
                     name: category.name,
                     color: category.color,
                     icon: category.icon,
-                    taskCount: taskCount ? taskCount.count : 0, // Set count to 0 if no tasks are found for that category
+                    taskCount: taskCount ? taskCount.count : 0,
                 };
             });
+            
+            // Weekly Progress Logic: Aggregate completed tasks from the last 7 days
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            sevenDaysAgo.setHours(0, 0, 0, 0);
 
-            // 5. Send the final response
+            const weeklyProgress = await Task.aggregate([
+                {
+                    $match: {
+                        completed: true, // Use the correct field 'completed'
+                        // Make sure your completedAt field is set when a task is completed.
+                        completedAt: { $exists: true, $gte: sevenDaysAgo } 
+                    }
+                },
+                {
+                    $group: {
+                        _id: { $dayOfWeek: '$completedAt' },
+                        count: { $sum: 1 }
+                    }
+                },
+                { $sort: { _id: 1 } }
+            ]);
+            
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const weeklyData = daysOfWeek.map((day, index) => {
+                const dayData = weeklyProgress.find(item => item._id === index + 1);
+                return dayData ? dayData.count : 0;
+            });
+
+            // Send the final response
             res.json({
                 success: true,
                 data: {
@@ -45,11 +74,11 @@ class TasksController {
                         pendingTasks,
                         inProgressTasks,
                         todayTasks,
-                        overdueTasks: 0, // Placeholder
+                        overdueTasks,
                     },
                     categories: categoriesWithCounts,
-                    weeklyProgress: [], // Placeholder
-                    weeklyLabels: [], // Placeholder
+                    weeklyProgress: weeklyData,
+                    weeklyLabels: daysOfWeek
                 }
             });
 

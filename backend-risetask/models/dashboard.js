@@ -1,8 +1,8 @@
 // models/dashboard.js
+
 import mongoose from 'mongoose';
 
 const taskSchema = new mongoose.Schema({
-  // ... (آپ کی موجودہ schema)
   title: {
     type: String,
     required: [true, 'Title is required'],
@@ -14,11 +14,10 @@ const taskSchema = new mongoose.Schema({
     trim: true,
     default: ''
   },
-  status: {
-    type: String,
+  completed: {
+    type: Boolean,
     required: true,
-    enum: ['pending', 'in-progress', 'completed'],
-    default: 'pending'
+    default: false
   },
   category: {
     type: String,
@@ -27,7 +26,7 @@ const taskSchema = new mongoose.Schema({
   },
   priority: {
     type: String,
-    enum: ['low', 'medium', 'high'],
+    enum: ['low', 'medium', 'high', 'urgent'],
     default: 'medium'
   },
   dueDate: {
@@ -40,17 +39,12 @@ const taskSchema = new mongoose.Schema({
   },
   completedAt: {
     type: Date,
-    required: function() {
-      return this.status === 'completed';
-    }
+    required: false
   }
 }, {
   timestamps: true
 });
 
-// یہ لائن تبدیل کریں
-// پہلے چیک کریں کہ 'Task' ماڈل پہلے سے موجود ہے یا نہیں
-// اگر ہے تو اسے استعمال کریں، ورنہ نیا بنائیں
-const dashboard = mongoose.models.Task || mongoose.model('Task', taskSchema);
+const tasks = mongoose.models.Task || mongoose.model('Task', taskSchema, 'tasklists');
 
-export default dashboard;
+export default tasks;

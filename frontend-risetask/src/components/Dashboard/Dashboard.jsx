@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     const fetchStats = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/tasklist');
+            const response = await axios.get('http://localhost:5000/api/tasks/stats');
             if (response.data.success) {
                 setStats(response.data.data);
             }

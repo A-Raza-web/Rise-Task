@@ -21,6 +21,7 @@ dotenv.config();
 
 const app = express();
 
+
 // ✅ CORS Middleware (ONLY once)
 app.use(cors({
   origin: "http://localhost:5173", // frontend ka port
@@ -30,6 +31,7 @@ app.use(cors({
 
 // ✅ Body parser
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ✅ Routes
 app.use("/api/hero", heroRoutes);
