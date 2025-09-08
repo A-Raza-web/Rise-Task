@@ -71,6 +71,7 @@ const Dashboard = () => {
                 data: stats.weeklyProgress?.map((item) => item.count) || [],
                 backgroundColor: stats.weeklyProgress?.map((item) => {
                     if (item.count === 0) return "#cfe2ff";   // light blue (0 tasks)
+                    if (item.count < 2) return "#d90a0aff";  
                     if (item.count < 3) return "#80bdff";    // medium blue (1-2 tasks)
                     if (item.count < 6) return "#339af0";    // darker blue (3-5 tasks)
                     return "#004085";                        // darkest blue (6+ tasks)

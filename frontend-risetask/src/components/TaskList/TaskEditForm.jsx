@@ -1,28 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
-import { FaSave, FaTimes } from 'react-icons/fa'; 
+import { FaSave, FaTimes } from "react-icons/fa";
 
 const TaskEditForm = ({
   task,
   API_URL,
-  fetchTasks,
   setEditId,
   editTitle,
   setEditTitle,
   editDescription,
   setEditDescription,
+  updateTaskInState, // ✅ اب ہم state میں direct update کریں گے
 }) => {
+  // ✅ جب form کھلے تو default values set کرو
+  useEffect(() => {
+    setEditTitle(task.title || "");
+    setEditDescription(task.description || "");
+  }, [task, setEditTitle, setEditDescription]);
+
   const saveEdit = async () => {
-    await axios.put(`${API_URL}/${task._id}`, {
-      title: editTitle,
-      description: editDescription,
-    });
-    fetchTasks();
-    setEditId(null);
+    try {
+      const updatedTask = {
+        title: editTitle.trim() || task.title,
+        description: editDescription.trim() || task.description,
+      };
+
+      const res = await axios.put(`${API_URL}/${task._id}`, updatedTask);
+
+      // ✅ صرف وہی task update ہوگا (full fetch کی ضرورت نہیں)
+      updateTaskInState(res.data);
+
+      setEditId(null); // واپس normal mode
+    } catch (err) {
+      console.error("❌ Update Error:", err.message);
+    }
   };
 
   return (
-    <>
+    <div className="card card-body shadow-sm border-0 mb-2">
       <input
         type="text"
         className="form-control mb-2"
@@ -39,11 +54,14 @@ const TaskEditForm = ({
         <button className="btn btn-success btn-sm" onClick={saveEdit}>
           <FaSave className="me-1" /> Save
         </button>
-        <button className="btn btn-secondary btn-sm" onClick={() => setEditId(null)}>
+        <button
+          className="btn btn-secondary btn-sm"
+          onClick={() => setEditId(null)}
+        >
           <FaTimes className="me-1" /> Cancel
         </button>
-     </div>
-    </>
+      </div>
+    </div>
   );
 };
 

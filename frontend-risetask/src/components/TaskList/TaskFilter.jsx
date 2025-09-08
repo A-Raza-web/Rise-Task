@@ -1,12 +1,46 @@
 import React from "react";
-import { FaSearch, FaFilter, FaListAlt, FaClock, FaCheck } from "react-icons/fa";
+import { FaSearch, FaListAlt, FaClock, FaCheck } from "react-icons/fa";
 
-const TaskFilter = ({ filter, setFilter, showDropdown, setShowDropdown, searchQuery, setSearchQuery }) => {
+const TaskFilter = ({ filter, setFilter, searchQuery, setSearchQuery }) => {
   return (
-    <div className="row mb-4">
-      <div className="col-md-8">
+    <div className="row mb-4 align-items-center">
+      {/* Custom Styles */}
+      <style>
+        {`
+          /* Search input */
+          .form-control:focus {
+            border-color: #f19952ff !important;
+            box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.4) !important;
+          }
+
+          .filter-group {
+            display: flex;
+            gap: 8px;
+          }
+          .filter-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 50px;
+            border: none;
+            color: #fd7e14;
+            font-weight: 500;
+            transition: all 0.3s ease;
+          }
+          .filter-btn.active {
+            background: #fd7e14;
+            color: white;
+          }
+
+        `}
+      </style>
+
+      {/* Search Bar */}
+      <div className="col-md-6 mb-2 mb-md-0">
         <div className="input-group">
-          <span className="input-group-text" style={{ backgroundColor: "#fd7e14", color: "white" }}>
+          <span
+            className="input-group-text"
+            style={{ backgroundColor: "#fd7e14", color: "white" }}
+          >
             <FaSearch />
           </span>
           <input
@@ -18,26 +52,29 @@ const TaskFilter = ({ filter, setFilter, showDropdown, setShowDropdown, searchQu
           />
         </div>
       </div>
-      <div className="col-md-4 position-relative">
-        <button className="btn text-white w-100" style={{ backgroundColor: "#fd7e14" }} onClick={() => setShowDropdown(!showDropdown)}>
-          <FaFilter className="me-2" />
-          {filter === "all" && "All Tasks"}
-          {filter === "pending" && "Pending"}
-          {filter === "completed" && "Completed"}
-        </button>
-        {showDropdown && (
-          <ul className="list-group position-absolute w-100 shadow mt-1 z-3">
-            <li className="list-group-item" onClick={() => setFilter("all")}>
-              <FaListAlt className="me-2 text-warning" /> All Tasks
-            </li>
-            <li className="list-group-item" onClick={() => setFilter("pending")}>
-              <FaClock className="me-2 text-warning" /> Pending
-            </li>
-            <li className="list-group-item" onClick={() => setFilter("completed")}>
-              <FaCheck className="me-2 text-success" /> Completed
-            </li>
-          </ul>
-        )}
+
+      {/* Segmented Filter Bar */}
+      <div className="col-md-6">
+        <div className="filter-group">
+          <button
+            className={`filter-btn ${filter === "all" ? "active" : ""}`}
+            onClick={() => setFilter("all")}
+          >
+            <FaListAlt /> All
+          </button>
+          <button
+            className={`filter-btn ${filter === "pending" ? "active" : ""}`}
+            onClick={() => setFilter("pending")}
+          >
+            <FaClock /> Pending
+          </button>
+          <button
+            className={`filter-btn ${filter === "completed" ? "active" : ""}`}
+            onClick={() => setFilter("completed")}
+          >
+            <FaCheck /> Completed
+          </button>
+        </div>
       </div>
     </div>
   );

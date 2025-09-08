@@ -53,7 +53,10 @@ const TaskItem = ({ task, editId, setEditId, editTitle, setEditTitle, editDescri
             <div className={`card shadow-sm border border-light card-task-hover priority-${priority} ${completed ? "bg-success bg-opacity-10" : ""}`}>
                 <div className="card-body">
                     {editId === _id ? (
-                        <TaskEditForm {...{ task, API_URL, fetchTasks, setEditId, editTitle, setEditTitle, editDescription, setEditDescription }} />
+                  <TaskEditForm 
+                    {...{ task, API_URL, setEditId, editTitle, setEditTitle, editDescription, setEditDescription, updateTaskInState }}
+                  />
+
                     ) : (
                         <>
                             {/* Task Details Section */}

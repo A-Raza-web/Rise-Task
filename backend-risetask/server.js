@@ -14,6 +14,7 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import tasklistRoutes from "./routes/tasklistRoutes.js"
 import dashboardRoutes from "./routes/dashboardRoutes.js"
+import settingsRoutes from "./routes/settingsRoutes.js";
 import authForm from "./routes/auth.js";
 
 // ✅ .env load
@@ -45,6 +46,7 @@ app.use("/api/tasklist", tasklistRoutes);
 app.use("/api/categories", taskCategoryRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use('/api/tasks', dashboardRoutes); 
+app.use("/api/settings", settingsRoutes);
 app.use("/api", authForm);
 
 // ✅ MongoDB connect
