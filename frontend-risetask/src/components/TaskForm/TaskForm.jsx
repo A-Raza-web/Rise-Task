@@ -146,7 +146,7 @@ const TaskForm = ({ onTaskAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4 task-form card shadow-sm p-4 mb-4 wt-75">
+    <form onSubmit={handleSubmit} className="mt-4 task-form card shadow-sm p-4 mb-4">
       <h4 className="mb-4 text-center task-form-title" style={{ color: orange }}>
         <FaPlusCircle className="me-2" /> Add a New Task
       </h4>

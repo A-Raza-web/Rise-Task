@@ -1,4 +1,4 @@
-/* src/components/TaskForm.css */
+src/components/TaskForm.css
 
 /* Main form container styling */
 .task-form.card {
@@ -97,6 +97,10 @@
 .btn-orange-outline:hover {
   background-color: #fd7e14;
   color: white;
+}
+.task-form {
+  max-width: 1360px; 
+  margin: auto;     
 }
 
 /* Validation feedback styling */

@@ -15,10 +15,11 @@ import taskRoutes from "./routes/taskRoutes.js";
 import tasklistRoutes from "./routes/tasklistRoutes.js"
 import dashboardRoutes from "./routes/dashboardRoutes.js"
 import settingsRoutes from "./routes/settingsRoutes.js";
-import authForm from "./routes/auth.js";
+import authForm from "./routes/authRoutes.js";
 
 // ✅ .env load
 dotenv.config();
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
 const app = express();
 
@@ -47,7 +48,7 @@ app.use("/api/categories", taskCategoryRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use('/api/tasks', dashboardRoutes); 
 app.use("/api/settings", settingsRoutes);
-app.use("/api", authForm);
+app.use("/api/auth", authForm);
 
 // ✅ MongoDB connect
 mongoose.connect(process.env.MONGO_URI, {})

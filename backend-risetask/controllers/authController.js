@@ -1,8 +1,6 @@
-import User from '../models/User.js';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET;
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 class AuthController {
   constructor() {
@@ -18,7 +16,7 @@ class AuthController {
       // Check if user already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ message: 'User already exists' });
+        return res.status(400).json({ message: "User already exists" });
       }
 
       // Hash password
@@ -33,9 +31,11 @@ class AuthController {
 
       await newUser.save();
 
-      return res.status(201).json({ message: 'User created successfully' });
+      return res.status(201).json({ message: "User created successfully" });
     } catch (err) {
-      return res.status(500).json({ message: 'Server error', error: err.message });
+      return res
+        .status(500)
+        .json({ message: "Server error", error: err.message });
     }
   }
 
@@ -47,25 +47,27 @@ class AuthController {
       // Check user existence
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: "Invalid credentials" });
       }
 
       // Compare password
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: "Invalid credentials" });
       }
 
       // Generate JWT Token
       const token = jwt.sign(
         { userId: user._id, email: user.email },
-        JWT_SECRET,
-        { expiresIn: '1h' }
+        process.env.JWT_SECRET, // ✅ Directly use env here
+        { expiresIn: "1h" }
       );
 
-      return res.status(200).json({ token, message: 'Login successful' });
+      return res.status(200).json({ token, message: "Login successful" });
     } catch (err) {
-      return res.status(500).json({ message: 'Server error', error: err.message });
+      return res
+        .status(500)
+        .json({ message: "Server error", error: err.message });
     }
   }
 }
