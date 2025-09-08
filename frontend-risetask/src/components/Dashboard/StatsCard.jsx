@@ -1,6 +1,5 @@
 // StatsCard.js
 import React from 'react';
-import { FaTasks } from "react-icons/fa"; // مثال کے طور پر، آپ کو تمام icons import کرنے کی ضرورت ہوگی
 
 const StatsCard = ({ title, value, icon: Icon, color }) => {
   return (

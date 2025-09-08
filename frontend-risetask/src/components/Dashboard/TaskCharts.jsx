@@ -14,7 +14,7 @@ const TaskCharts = ({ doughnutData, doughnutOptions, barData }) => {
       <div className="col-md-6 mb-3">
         <div className="card h-100 shadow-sm border-0">
           <div className="card-header">
-            <h5><FaChartPie className="me-2" style={orange} /> Task Distribution</h5>
+            <h5><FaChartPie className="me-2" style={orange}/>Task Distribution</h5>
           </div>
           <div className="card-body d-flex justify-content-center align-items-center">
             <div style={{ height: '300px', width: '300px' }}>
@@ -26,7 +26,7 @@ const TaskCharts = ({ doughnutData, doughnutOptions, barData }) => {
       <div className="col-md-6 mb-3">
         <div className="card h-100 shadow-sm border-0">
           <div className="card-header">
-            <h5><FaCalendar className="me-2" style={orange} /> Weekly Progress</h5>
+            <h5><FaCalendar className="me-2" style={orange}/>Weekly Progress</h5>
           </div>
           <div className="card-body d-flex justify-content-center align-items-center">
             <div style={{ height: '300px', width: '100%' }}>
