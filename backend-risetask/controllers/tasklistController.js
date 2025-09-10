@@ -59,7 +59,7 @@ class TaskController {
         }
     }
 
-// ✅ Toggle task complete/incomplete - Fix
+// ✅ Toggle task complete/incomplete - Fixed
 static async toggleTask(req, res) {
   try {
     const { id } = req.params;
@@ -69,28 +69,23 @@ static async toggleTask(req, res) {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    const isCompleted = !task.completed;
+    task.completed = !task.completed;
 
-    let updateData = { completed: isCompleted };
-
-    if (isCompleted) {
-      updateData.completedAt = new Date();   // ✅ Save timestamp
+    if (task.completed) {
+      task.completedAt = new Date();   // ✅ Save timestamp
     } else {
-      updateData.completedAt = undefined;    // ✅ Field remove کر دے گا
+      task.completedAt = null;         // ✅ Clear field
     }
 
-    const updatedTask = await Task.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    );
+    await task.save(); // ✅ Direct save
 
-    res.status(200).json(updatedTask);
+    res.status(200).json(task);
   } catch (error) {
     console.error("❌ Error toggling task:", error.message);
     res.status(500).json({ message: "Server error while toggling task" });
   }
 }
+
 
 }
 export default TaskController;
